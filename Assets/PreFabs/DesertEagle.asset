@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c4213e89a434579988e099cf59cf2f, type: 3}
+  m_Name: DesertEagle
+  m_EditorClassIdentifier: 
+  gunName: DesertEagle
+  gunIcon: {fileID: 2992757133290308134, guid: 7dfc63c42ab904bd7ab0cc236d8056c7, type: 3}
+  gunPrefab: {fileID: 453167136735261858, guid: 5c2ae1d84d7e14da4a30ab0b5e0ec316, type: 3}
+  bulletPrefab: {fileID: 6395543438918855788, guid: 9e3c1038390c24e1aa68b88db3e89647, type: 3}
+  bulletSpeed: 50
+  gunDistance: 2
+  recoilAngle: 90
+  recoilDuration: 0.8
+  fadeInTime: 0.02
+  fadeOutTime: 0.08

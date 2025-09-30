@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - Bullet
   - MuzzleFlash
+  - Wall
+  - InteractableBlock
+  - Pipe
   layers:
   - Default
   - TransparentFX
@@ -18,9 +21,9 @@ TagManager:
   - Player
   - Enemy
   - Bullet
-  - 
-  - 
-  - 
+  - Ground
+  - Wall
+  - Obstacles
   - 
   - 
   - 
@@ -48,11 +51,17 @@ TagManager:
   - name: Background
     uniqueID: 2776371127
     locked: 0
-  - name: Ground
-    uniqueID: 1007786157
+  - name: Players
+    uniqueID: 1576922591
     locked: 0
   - name: Enemies
     uniqueID: 3387574663
+    locked: 0
+  - name: Ground
+    uniqueID: 1007786157
+    locked: 0
+  - name: Wall
+    uniqueID: 3576592197
     locked: 0
   m_RenderingLayers:
   - Default

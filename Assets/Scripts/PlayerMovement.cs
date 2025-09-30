@@ -76,8 +76,8 @@ public class PlayerMovement : MonoBehaviour
 
     #region LAYERS & TAGS
     [Header("Layers & Tags")]
-	[SerializeField] private LayerMask _groundLayer;
-	#endregion
+    [SerializeField] private LayerMask _groundLayer;
+    #endregion
 
     // Start is called before the first frame update
     void Awake()
@@ -134,15 +134,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (!IsDashing && !IsJumping)
         {
-            setGroundState(true);
 
             if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer))
             {
                 if (LastOnGroundTime < -0.1f)
                 {
                     // animation on land
+                    setGroundState(true);
                 }
                 LastOnGroundTime = playerData.coyoteTime;
+            }
+            else
+            {
+                setGroundState(false); // Clear ground state when not touching ground
             }
 
             //Right Wall Check
@@ -158,29 +162,29 @@ public class PlayerMovement : MonoBehaviour
             //Two checks needed for both left and right walls since whenever the play turns the wall checkPoints swap sides
             LastOnWallTime = Mathf.Max(LastOnWallLeftTime, LastOnWallRightTime);
         }
-        
+
         if (IsJumping && marioBody.linearVelocityY < 0)
-		{
-			IsJumping = false;
-
-			_isJumpFalling = true;
-		}
-
-		if (IsWallJumping && Time.time - _wallJumpStartTime > playerData.wallJumpTime)
-		{
-            Debug.Log("Wall Jump ended");
-			IsWallJumping = false;
-		}
-
-		if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping)
         {
-			_isJumpCut = false;
+            IsJumping = false;
 
-			_isJumpFalling = false;
-		}
+            _isJumpFalling = true;
+        }
 
-		if (!IsDashing)
-		{
+        if (IsWallJumping && Time.time - _wallJumpStartTime > playerData.wallJumpTime)
+        {
+            Debug.Log("Wall Jump ended");
+            IsWallJumping = false;
+        }
+
+        if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping)
+        {
+            _isJumpCut = false;
+
+            _isJumpFalling = false;
+        }
+
+        if (!IsDashing)
+        {
             //Jump
             if (CanJump() && LastPressedJumpTime > 0)
             {
@@ -205,83 +209,83 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("Wall Jump Direction: " + _lastWallJumpDir);
 
                 WallJump(_lastWallJumpDir);
-			}
-		}
+            }
+        }
 
-		#region DASH CHECKS
-		if (CanDash() && LastPressedDashTime > 0)
-		{
-			//Freeze game for split second. Adds juiciness and a bit of forgiveness over directional input
-			Sleep(playerData.dashSleepTime); 
+        #region DASH CHECKS
+        if (CanDash() && LastPressedDashTime > 0)
+        {
+            //Freeze game for split second. Adds juiciness and a bit of forgiveness over directional input
+            Sleep(playerData.dashSleepTime);
 
-			//If not direction pressed, dash forward
-			if (_moveInput != Vector2.zero)
-				_lastDashDir = _moveInput;
-			else
-				_lastDashDir = IsFacingRight ? Vector2.right : Vector2.left;
+            //If not direction pressed, dash forward
+            if (_moveInput != Vector2.zero)
+                _lastDashDir = _moveInput;
+            else
+                _lastDashDir = IsFacingRight ? Vector2.right : Vector2.left;
 
 
 
-			IsDashing = true;
-			IsJumping = false;
-			IsWallJumping = false;
-			_isJumpCut = false;
+            IsDashing = true;
+            IsJumping = false;
+            IsWallJumping = false;
+            _isJumpCut = false;
 
-			StartCoroutine(nameof(StartDash), _lastDashDir);
-		}
-		#endregion
+            StartCoroutine(nameof(StartDash), _lastDashDir);
+        }
+        #endregion
 
-		#region SLIDE CHECKS
-		if (CanSlide() && ((LastOnWallLeftTime > 0 && _moveInput.x < 0) || (LastOnWallRightTime > 0 && _moveInput.x > 0)))
-			IsSliding = true;
-		else
-			IsSliding = false;
-		#endregion
+        #region SLIDE CHECKS
+        if (CanSlide() && ((LastOnWallLeftTime > 0 && _moveInput.x < 0) || (LastOnWallRightTime > 0 && _moveInput.x > 0)))
+            IsSliding = true;
+        else
+            IsSliding = false;
+        #endregion
 
-		#region GRAVITY
-		if (!_isDashAttacking)
-		{
-			//Higher gravity if we've released the jump input or are falling
-			if (IsSliding)
-			{
-				setGravityScale(0);
-			}
-			else if (marioBody.linearVelocityY < 0 && _moveInput.y < 0)
-			{
-				//Much higher gravity if holding down
-				setGravityScale(playerData.gravityScale * playerData.fastFallGravityMultiplier);
-				//Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
-				marioBody.linearVelocity = new Vector2(marioBody.linearVelocityX, Mathf.Max(marioBody.linearVelocityY, -playerData.maxFastFallSpeed));
-			}
-			else if (_isJumpCut)
-			{
-				//Higher gravity if jump button released
-				setGravityScale(playerData.gravityScale * playerData.jumpCutGravityMultiplier);
-				marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, Mathf.Max(marioBody.linearVelocity.y, -playerData.maxFallSpeed));
-			}
-			else if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(marioBody.linearVelocity.y) < playerData.jumpHangTimeThreshold)
-			{
-				setGravityScale(playerData.gravityScale * playerData.jumpHangGravityMultiplier);
-			}
-			else if (marioBody.linearVelocity.y < 0)
-			{
-				//Higher gravity if falling
-				setGravityScale(playerData.gravityScale * playerData.fallGravityMultiplier);
-				//Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
-				marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, Mathf.Max(marioBody.linearVelocity.y, -playerData.maxFallSpeed));
-			}
-			else
-			{
-				//Default gravity if standing on a platform or moving upwards
-				setGravityScale(playerData.gravityScale);
-			}
-		}
-		else
-		{
-			//No gravity when dashing (returns to normal once initial dashAttack phase over)
-			setGravityScale(0);
-		}
-		#endregion
+        #region GRAVITY
+        if (!_isDashAttacking)
+        {
+            //Higher gravity if we've released the jump input or are falling
+            if (IsSliding)
+            {
+                setGravityScale(0);
+            }
+            else if (marioBody.linearVelocityY < 0 && _moveInput.y < 0)
+            {
+                //Much higher gravity if holding down
+                setGravityScale(playerData.gravityScale * playerData.fastFallGravityMultiplier);
+                //Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
+                marioBody.linearVelocity = new Vector2(marioBody.linearVelocityX, Mathf.Max(marioBody.linearVelocityY, -playerData.maxFastFallSpeed));
+            }
+            else if (_isJumpCut)
+            {
+                //Higher gravity if jump button released
+                setGravityScale(playerData.gravityScale * playerData.jumpCutGravityMultiplier);
+                marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, Mathf.Max(marioBody.linearVelocity.y, -playerData.maxFallSpeed));
+            }
+            else if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(marioBody.linearVelocity.y) < playerData.jumpHangTimeThreshold)
+            {
+                setGravityScale(playerData.gravityScale * playerData.jumpHangGravityMultiplier);
+            }
+            else if (marioBody.linearVelocity.y < 0)
+            {
+                //Higher gravity if falling
+                setGravityScale(playerData.gravityScale * playerData.fallGravityMultiplier);
+                //Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
+                marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, Mathf.Max(marioBody.linearVelocity.y, -playerData.maxFallSpeed));
+            }
+            else
+            {
+                //Default gravity if standing on a platform or moving upwards
+                setGravityScale(playerData.gravityScale);
+            }
+        }
+        else
+        {
+            //No gravity when dashing (returns to normal once initial dashAttack phase over)
+            setGravityScale(0);
+        }
+        #endregion
     }
     void FixedUpdate()
     {
@@ -299,9 +303,9 @@ public class PlayerMovement : MonoBehaviour
             Run(playerData.dashEndRunLerp);
         }
 
-		//Handle Slide
-		if (IsSliding)
-			Slide();
+        //Handle Slide
+        if (IsSliding)
+            Slide();
     }
 
     // Flip the character to face the mouse cursor (for future use with shooting)
@@ -515,10 +519,10 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator TwoPhaseWallJump(int dir)
     {
         float halfWallJumpTime = playerData.wallJumpTime / 2f;
-        
+
         // Phase 1: Jump away from wall
         Vector2 awayForce = new Vector2(playerData.wallJumpForce.x * dir, playerData.wallJumpForce.y);
-        
+
         // Handle existing velocity
         if (Mathf.Sign(marioBody.linearVelocityX) != Mathf.Sign(awayForce.x))
         {
@@ -528,17 +532,17 @@ public class PlayerMovement : MonoBehaviour
         {
             awayForce.y -= marioBody.linearVelocityY;
         }
-        
+
         marioBody.AddForce(awayForce, ForceMode2D.Impulse);
         Turn();
         Debug.Log("Phase 1: Jumping away from wall with force: " + awayForce);
-        
+
         // Wait for first half of wall jump time
         yield return new WaitForSeconds(halfWallJumpTime);
-        
+
         // Phase 2: Check if player wants to jump back towards wall
         bool movingTowardsWall = (_moveInput.x > 0 && dir == -1) || (_moveInput.x < 0 && dir == 1);
-        
+
         if (movingTowardsWall)
         {
             Turn();
@@ -629,7 +633,7 @@ public class PlayerMovement : MonoBehaviour
     private bool ShouldPlaySkidAnimation()
     {
         // Check if player is moving fast enough in the opposite direction
-        
+
         // If facing right but moving left with significant speed
         if (!IsJumping && !IsWallJumping && IsFacingRight && _moveInput.x < -0.1f)
         {
@@ -640,10 +644,10 @@ public class PlayerMovement : MonoBehaviour
         {
             return true;
         }
-        
+
         return false;
     }
-    
+
 
     private bool CanJump()
     {

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: AWP
   gunIcon: {fileID: 5952534610906954228, guid: 66138ab4fb3974a1d915774744748e7a, type: 3}
-  gunPrefab: {fileID: 6166318645959775679, guid: d697a686a36d64600aa3a7f4f167606f, type: 3}
+  gunPrefab: {fileID: 5413837740033850739, guid: fe2be28116c114364b50de90cfe6c912, type: 3}
   bulletPrefab: {fileID: 6395543438918855788, guid: 07b37c304e7bb4de58a39e460e1ac8cd, type: 3}
-  bulletSpeed: 50
+  bulletSpeed: 100
   gunDistance: 3
   recoilAngle: 90
   recoilDuration: 0.8
   fadeInTime: 0.02
-  fadeOutTime: 0.5
+  fadeOutTime: 0.08

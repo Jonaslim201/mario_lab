@@ -14,7 +14,6 @@ public class EnemyPool : MonoBehaviour
     void Start()
     {
         pool = new List<GameObject>();
-        createObject();
     }
 
     // Update is called once per  frame
@@ -50,5 +49,14 @@ public class EnemyPool : MonoBehaviour
         obj.SetActive(false);
         pool.Add(obj);
         return obj;
+    }
+
+    public void Reset()
+    {
+        foreach (GameObject obj in pool)
+        {
+            Destroy(obj);
+        }
+        pool.Clear();
     }
 }

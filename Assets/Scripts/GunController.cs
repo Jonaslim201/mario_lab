@@ -7,7 +7,7 @@ public class GunController : MonoBehaviour
     private bool gunFacingRight = true;
     private float baseRotation; // The rotation the gun should be at without recoil
     private int currentGunIndex = -1;
-    public float slowMotionScale = 0.2f;
+    public float slowMotionScale = 0.1f;
 
     private GunManager gunManager;
 
@@ -43,17 +43,20 @@ public class GunController : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         gun.position = transform.position + Quaternion.Euler(0, 0, angle) * new Vector3(gunData.gunDistance, 0, 0);
 
-        if (Input.GetKeyDown("mouse 0")){
+        if (Input.GetKeyDown("mouse 0"))
+        {
             Shoot(direction, gun, currentGunInstance, gunData);
         }
 
-        if (Input.GetKeyDown("r") && gunData.gunName == "AWP"){
+        if (Input.GetKeyDown("r") && gunData.gunName == "AWP")
+        {
             Debug.Log($"Right click - Slow motion activated");
             Time.timeScale = slowMotionScale;
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
         }
 
-        if (Input.GetKeyUp("r")){
+        if (Input.GetKeyUp("r"))
+        {
             Debug.Log($"Normal time restored");
             Time.timeScale = 1.0f;
             Time.fixedDeltaTime = 0.02f;
@@ -62,20 +65,26 @@ public class GunController : MonoBehaviour
         GunFlipController(mousePos, gun);
     }
 
-    private void GunFlip(Transform gun){
+    private void GunFlip(Transform gun)
+    {
         gunFacingRight = !gunFacingRight;
         gun.localScale = new Vector3(gun.localScale.x, gun.localScale.y * -1, gun.localScale.z);
     }
 
-    private void GunFlipController(Vector3 mousePos, Transform gun){
-        if (mousePos.x < gun.position.x && gunFacingRight){
+    private void GunFlipController(Vector3 mousePos, Transform gun)
+    {
+        if (mousePos.x < gun.position.x && gunFacingRight)
+        {
             GunFlip(gun);
-        } else if (mousePos.x > gun.position.x && !gunFacingRight){
+        }
+        else if (mousePos.x > gun.position.x && !gunFacingRight)
+        {
             GunFlip(gun);
         }
     }
 
-    public void Shoot(Vector3 direction, Transform gun, GunInstance gunInstance, GunData gunData){
+    public void Shoot(Vector3 direction, Transform gun, GunInstance gunInstance, GunData gunData)
+    {
 
         if (gun == null) return;
 
@@ -91,7 +100,7 @@ public class GunController : MonoBehaviour
     private System.Collections.IEnumerator RecoilEffect(Transform gun, GunData gunData)
     {
         isRecoiling = true;
-        
+
         float startRotation = baseRotation;
         float recoilDirection = gunFacingRight ? gunData.recoilAngle : -gunData.recoilAngle;
         float recoilRotation = baseRotation + recoilDirection; // Kick upward
@@ -115,11 +124,12 @@ public class GunController : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        
+
         isRecoiling = false;
     }
 
-    private System.Collections.IEnumerator MuzzleFlashEffect(GunInstance gunInstance, GunData gunData){
+    private System.Collections.IEnumerator MuzzleFlashEffect(GunInstance gunInstance, GunData gunData)
+    {
         if (gunInstance.muzzleFlash == null)
         {
             Debug.LogError("Muzzle flash is null!");
@@ -132,8 +142,9 @@ public class GunController : MonoBehaviour
         Debug.Log($"Starting muzzle flash. Initial alpha: {flashColor.a}");
 
         float elapsed = 0f;
-        while (elapsed < gunData.fadeInTime){
-            flashColor.a = Mathf.Lerp(0f, 1f, elapsed/gunData.fadeInTime);
+        while (elapsed < gunData.fadeInTime)
+        {
+            flashColor.a = Mathf.Lerp(0f, 1f, elapsed / gunData.fadeInTime);
             muzzleFlash.color = flashColor;
             elapsed += Time.deltaTime;
             yield return null;
@@ -145,8 +156,9 @@ public class GunController : MonoBehaviour
         Debug.Log($"Muzzle flash at full brightness: {flashColor.a}");
 
         elapsed = 0f;
-        while (elapsed < gunData.fadeOutTime){
-            flashColor.a = Mathf.Lerp(1f, 0f, elapsed/gunData.fadeOutTime);
+        while (elapsed < gunData.fadeOutTime)
+        {
+            flashColor.a = Mathf.Lerp(1f, 0f, elapsed / gunData.fadeOutTime);
             muzzleFlash.color = flashColor;
             elapsed += Time.deltaTime;
             yield return null;

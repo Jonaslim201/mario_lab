@@ -415,7 +415,6 @@ public class PlayerMovement : MonoBehaviour
     #region RUN METHODS
     private void Run(float lerpAmount)
     {
-        Debug.Log("Running");
         float targetSpeed = _moveInput.x * playerData.runMaxSpeed;
         targetSpeed = Mathf.Lerp(marioBody.linearVelocity.x, targetSpeed, lerpAmount);
 
@@ -607,6 +606,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (marioBody.linearVelocityY > 0)
         {
+            Debug.Log("Sliding upwards, cancelling upward velocity");
             marioBody.AddForce(-marioBody.linearVelocityY * Vector2.up, ForceMode2D.Impulse);
         }
 
@@ -616,6 +616,7 @@ public class PlayerMovement : MonoBehaviour
         movement = Mathf.Clamp(movement, -Mathf.Abs(speedDiff) * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDiff) * (1 / Time.fixedDeltaTime));
 
         marioBody.AddForce(movement * Vector2.up);
+        Debug.Log("Sliding down wall with added force: " + (movement * Vector2.up));
     }
 
     #endregion

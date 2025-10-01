@@ -415,7 +415,6 @@ public class PlayerMovement : MonoBehaviour
     #region RUN METHODS
     private void Run(float lerpAmount)
     {
-        Debug.Log("Running");
         float targetSpeed = _moveInput.x * playerData.runMaxSpeed;
         targetSpeed = Mathf.Lerp(marioBody.linearVelocity.x, targetSpeed, lerpAmount);
 

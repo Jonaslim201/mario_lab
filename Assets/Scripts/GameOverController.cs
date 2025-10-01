@@ -99,7 +99,7 @@ public class GameOverController : MonoBehaviour
         // reset Goomba
         foreach (Transform eachChild in enemies.transform)
         {
-            eachChild.transform.localPosition = eachChild.GetComponent<EnemyMovement>().startPosition;
+            eachChild.transform.localPosition = eachChild.GetComponent<EnemyMovement>().originalPos;
         }
         jumpOverGoomba.score = 0;
         gameObject.SetActive(false);

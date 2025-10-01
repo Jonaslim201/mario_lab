@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3715522241887482219}
   - component: {fileID: 1774344482747829577}
   - component: {fileID: 5298286632879748268}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GoombaSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,8 +53,6 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -76,9 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -907392633
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: -679577783, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -123,7 +120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9129822457750689424}
   - component: {fileID: 5493132004909687083}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GoombaHitbox
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -203,7 +200,7 @@ GameObject:
   - component: {fileID: 6125748771130077878}
   - component: {fileID: 6354317112937451517}
   - component: {fileID: 3412779408736033877}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Goomba
   m_TagString: Untagged
   m_Icon: {fileID: 0}

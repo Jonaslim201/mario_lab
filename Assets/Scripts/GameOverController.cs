@@ -11,6 +11,7 @@ public class GameOverController : MonoBehaviour
     [SerializeField] private GameObject enemies;
     [SerializeField] private JumpOverGoomba jumpOverGoomba;
     [SerializeField] private GameObject gameUI;
+    [SerializeField] private Timer Timer;
 
     private PlayerMovement playerMovement;
     private Rigidbody2D playerBody;
@@ -103,5 +104,6 @@ public class GameOverController : MonoBehaviour
         }
         jumpOverGoomba.score = 0;
         gameObject.SetActive(false);
+        Timer.Reset();
     }
 }

@@ -336,7 +336,7 @@ SpriteRenderer:
   m_SortingLayerID: -907392633
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1750480752, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: -1774987757, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -667,7 +667,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 602847041}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BackgroundScenery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1153,7 +1153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc36e4620c8c40c1a5f76bf49236b55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLocation: {fileID: 1038784604}
+  enemyLocation: {fileID: 1606472134}
   scoreText: {fileID: 851068760}
   boxSize: {x: 0.5, y: 1, z: 0}
   maxDistance: 0.5
@@ -1168,7 +1168,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711198049}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3dc153cc6fe8d47299d4f2952f5be2e5, type: 2}
   m_CullingMode: 0
@@ -1402,7 +1402,7 @@ SpriteRenderer:
   m_SortingLayerID: -907392633
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1750480752, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: -1774987757, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1765,7 +1765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 871134331}
   - component: {fileID: 871134332}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mid Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1831,12 +1831,12 @@ SpriteRenderer:
   m_SortingLayerID: -1518596169
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 883015915, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: 2114689688, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1851,7 +1851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 882434272}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1969,7 +1969,7 @@ GameObject:
   m_Component:
   - component: {fileID: 944061975}
   - component: {fileID: 944061976}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Small Hill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2035,12 +2035,12 @@ SpriteRenderer:
   m_SortingLayerID: -1518596169
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 989059260, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: 1526082783, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3, y: 1.1875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -2156,11 +2156,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977529405}
   m_CullTransparentMesh: 1
---- !u!4 &1038784604 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-  m_PrefabInstance: {fileID: 6822692493531605259}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1044879836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2268,7 +2263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1073865921}
   - component: {fileID: 1073865922}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mid Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2334,12 +2329,12 @@ SpriteRenderer:
   m_SortingLayerID: -1518596169
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1676771247, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: -1573499139, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -2533,7 +2528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1370340739}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StaticEnvironment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2549,7 +2544,7 @@ Transform:
   m_GameObject: {fileID: 1370340738}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.93014944, y: -0.18128534, z: 0.031750306}
+  m_LocalPosition: {x: -0.93014944, y: -0.18128534, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3091,7 +3086,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1559305420}
   - component: {fileID: 1559305421}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Small Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3157,12 +3152,12 @@ SpriteRenderer:
   m_SortingLayerID: -1518596169
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1153842394, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: 1089960399, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3358,7 +3353,7 @@ SpriteRenderer:
   m_SortingLayerID: -907392633
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1750480752, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: -1774987757, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3478,7 +3473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1606472134}
   - component: {fileID: 1606472135}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3494,11 +3489,11 @@ Transform:
   m_GameObject: {fileID: 1606472133}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.93014944, y: -0.18128534, z: 0.031750306}
+  m_LocalPosition: {x: -2.4, y: -0.18128534, z: 0.031750306}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1038784604}
+  - {fileID: 1750025363}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1606472135
@@ -3513,11 +3508,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9c81063b16d741b7a7fb2a9f2bc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7368192978169992530, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
+  enemyPrefab: {fileID: 8247293907577183981, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
 --- !u!4 &1627470871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7580359683869817124, guid: b06de26a6332e4f30ac3d1266de09e35, type: 3}
   m_PrefabInstance: {fileID: 1513111370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1750025363 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+  m_PrefabInstance: {fileID: 1906139535}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1759172819
 GameObject:
@@ -3529,7 +3529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1759172820}
   - component: {fileID: 1759172821}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Big Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3595,12 +3595,12 @@ SpriteRenderer:
   m_SortingLayerID: -1518596169
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -195409027, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: 772300253, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3731,6 +3731,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1906139535
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1606472134}
+    m_Modifications:
+    - target: {fileID: 216641786696177128, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825848123222071689, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8247293907577183981, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_Name
+      value: Goomba
+      objectReference: {fileID: 0}
+    - target: {fileID: 8247293907577183981, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
 --- !u!1 &1926525776
 GameObject:
   m_ObjectHideFlags: 0
@@ -4071,7 +4140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2007886395}
   - component: {fileID: 2007886396}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Big Hill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4137,12 +4206,12 @@ SpriteRenderer:
   m_SortingLayerID: -1518596169
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1122873561, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: -1768110406, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5, y: 2.1875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -4233,7 +4302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2102146056}
   - component: {fileID: 2102146057}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Big Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4299,12 +4368,12 @@ SpriteRenderer:
   m_SortingLayerID: -1518596169
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1638244730, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: -2031991861, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -4320,7 +4389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2132373703}
   - component: {fileID: 2132373704}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Small Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4386,12 +4455,12 @@ SpriteRenderer:
   m_SortingLayerID: -1518596169
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1794896507, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: -1159184236, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -4572,63 +4641,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2db06effb6b86485687cbbf62691b035, type: 3}
---- !u!1001 &6822692493531605259
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1606472134}
-    m_Modifications:
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.0318
-      objectReference: {fileID: 0}
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 776246446771838181, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7368192978169992530, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
-      propertyPath: m_Name
-      value: Goomba
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 725ba5dc6c02b4d26ad9524b5b170183, type: 3}
 --- !u!1001 &8939012038487490726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4698,8 +4710,8 @@ SceneRoots:
   - {fileID: 618124927}
   - {fileID: 619394802}
   - {fileID: 711198051}
-  - {fileID: 1370340739}
   - {fileID: 1606472134}
+  - {fileID: 1370340739}
   - {fileID: 8939012038487490726}
   - {fileID: 6544995174643184637}
   - {fileID: 1606273757}

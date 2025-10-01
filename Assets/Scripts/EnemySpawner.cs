@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
         {
             enemy.SetActive(true);
             enemyInstance = enemy.GetComponent<EnemyMovement>();
-            //enemyInstance.Reset();
+            enemyInstance.Reset();
             enemy.transform.position = transform.position;
         }
     }

@@ -5,11 +5,21 @@ public class CoinBehavior : MonoBehaviour
 {
     private AudioSource audioSource;
     [SerializeField] public AudioClip coinPickUpSound;
+    [SerializeField] public AnimationClip coinFlyAnimation;
+    private Animator coinAnimator;
+    private SpriteRenderer coinSpriteRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         Debug.Assert(audioSource != null, "AudioSource component missing from CoinBehavior");
+
+        coinSpriteRenderer = GetComponent<SpriteRenderer>();
+        Debug.Assert(coinSpriteRenderer != null, "SpriteRenderer component missing from CoinBehavior");
+        coinSpriteRenderer.enabled = false;
+
+        coinAnimator = GetComponent<Animator>();
+        Debug.Assert(coinAnimator != null, "Animator component missing from CoinBehavior");
     }
 
     // Update is called once per frame
@@ -30,5 +40,24 @@ public class CoinBehavior : MonoBehaviour
         yield return new WaitForSeconds(coinPickUpSound.length);
 
         Destroy(gameObject);
+    }
+
+    public void ReleaseCoin()
+    {
+        StartCoroutine(SpawnAndAnimateCoin());
+    }
+
+    public IEnumerator SpawnAndAnimateCoin()
+    {
+        coinSpriteRenderer.enabled = true;
+
+        coinAnimator.SetTrigger("PlayerHit");
+        Debug.Log("Coin spawned and animation triggered");
+
+        yield return new WaitForSeconds(coinFlyAnimation.length);
+
+        coinSpriteRenderer.enabled = false;
+
+        PlayCoinSound();
     }
 }

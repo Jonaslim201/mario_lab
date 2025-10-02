@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1912993155712109751
+--- !u!1 &6720676292426794955
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 936207770044710604}
-  - component: {fileID: 5297610339770009082}
+  - component: {fileID: 577854843500251341}
+  - component: {fileID: 6824466459078063956}
   m_Layer: 9
-  m_Name: Question Box Spring
-  m_TagString: Ground
+  m_Name: Red Brick Spring Coin
+  m_TagString: InteractableBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &936207770044710604
+--- !u!4 &577854843500251341
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912993155712109751}
+  m_GameObject: {fileID: 6720676292426794955}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.1617947, y: -2.9983125, z: 0.15110953}
+  m_LocalPosition: {x: 12.68, y: 0.59, z: 0.075554766}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5940972224711266082}
+  - {fileID: 3242249709464541938}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &5297610339770009082
+--- !u!50 &6824466459078063956
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912993155712109751}
+  m_GameObject: {fileID: 6720676292426794955}
   m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -60,7 +60,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &4634134104105589105
+--- !u!1 &7916852371420784159
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,43 +68,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5940972224711266082}
-  - component: {fileID: 4328614090814337654}
-  - component: {fileID: 2494783809497645638}
-  - component: {fileID: 765818307810100753}
-  - component: {fileID: 6899950351373428485}
-  - component: {fileID: 8251621639136970214}
-  - component: {fileID: 4199854604846057838}
-  - component: {fileID: 2439204378281910445}
+  - component: {fileID: 3242249709464541938}
+  - component: {fileID: 2451345828445825546}
+  - component: {fileID: 6108335302255477304}
+  - component: {fileID: 1592940528965672011}
+  - component: {fileID: 6106373204413157886}
+  - component: {fileID: 2235098403672107655}
+  - component: {fileID: 9183638425160907651}
   m_Layer: 9
-  m_Name: Question Mark Block
-  m_TagString: Ground
+  m_Name: Red Brick Block
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5940972224711266082
+--- !u!4 &3242249709464541938
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634134104105589105}
+  m_GameObject: {fileID: 7916852371420784159}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1.0452, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 936207770044710604}
+  m_Father: {fileID: 577854843500251341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4328614090814337654
+--- !u!212 &2451345828445825546
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634134104105589105}
+  m_GameObject: {fileID: 7916852371420784159}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -142,7 +141,7 @@ SpriteRenderer:
   m_SortingLayerID: 1576922591
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 770621876, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+  m_Sprite: {fileID: 1371960512, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -153,13 +152,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2494783809497645638
+--- !u!61 &6108335302255477304
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634134104105589105}
+  m_GameObject: {fileID: 7916852371420784159}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -199,14 +198,14 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.010011}
   m_EdgeRadius: 0
---- !u!50 &765818307810100753
+--- !u!50 &1592940528965672011
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634134104105589105}
+  m_GameObject: {fileID: 7916852371420784159}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -226,17 +225,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!231 &6899950351373428485
+--- !u!231 &6106373204413157886
 SpringJoint2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634134104105589105}
+  m_GameObject: {fileID: 7916852371420784159}
   m_Enabled: 1
   serializedVersion: 4
   m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 5297610339770009082}
+  m_ConnectedRigidBody: {fileID: 6824466459078063956}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_BreakAction: 3
@@ -247,38 +246,16 @@ SpringJoint2D:
   m_Distance: 1
   m_DampingRatio: 0
   m_Frequency: 5
---- !u!95 &8251621639136970214
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634134104105589105}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 053e3369d883b47aa98fb27b5deef569, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4199854604846057838
+--- !u!114 &2235098403672107655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634134104105589105}
+  m_GameObject: {fileID: 7916852371420784159}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e5a00f20d8f344eabdc676d39e666b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fe1ec52674064da89bbe66ae2b087dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canReleaseCoins: 0
@@ -286,14 +263,13 @@ MonoBehaviour:
   hasAnimation: 0
   bounceDuration: 0.7
   bounceForce: 10
-  animator: {fileID: 8251621639136970214}
---- !u!114 &2439204378281910445
+--- !u!114 &9183638425160907651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634134104105589105}
+  m_GameObject: {fileID: 7916852371420784159}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e5d1689abb3a4b53a66e156ccbc7f10, type: 3}

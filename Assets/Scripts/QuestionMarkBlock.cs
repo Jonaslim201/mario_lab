@@ -1,45 +1,47 @@
 using System.Collections;
 using UnityEngine;
 
-public class QuestionMarkBlock : InteractableObject
+public class QuestionMarkBlock : BaseBlock
 {
-    [SerializeField] public float bounceDuration = 0.7f;
-    public CoinBlock coinBlock;
     [SerializeField] public Animator animator;
+    private CoinReleaser coinReleaser;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        // Configure this block type
+        canReleaseCoins = true;
+        staysBouncy = false; // Becomes inactive after first hit
+        hasAnimation = true;
+
+        coinReleaser = GetComponent<CoinReleaser>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Start()
+    {
+        base.Start();
+        if (animator)
+        {
+            animator.SetBool("isActive", true);
+        }
+    }
+
+    protected override void PlayAnimation()
     {
         if (animator)
         {
-            animator.SetBool("isActive", isActive);
+            Debug.Log("QuestionMarkBlock: Playing animation");
+            animator.SetBool("isActive", false);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void ReleaseCoin()
     {
-
-    }
-
-    private IEnumerator HoldBlockInPlaceCoroutine()
-    {
-        yield return new WaitForSeconds(bounceDuration);
-        HoldBlockInPlace();
-    }
-
-    public override void Interact()
-    {
-        if (animator)
+        if (coinReleaser != null)
         {
-            Debug.Log("QuestionMarkBlock interacted with");
-            animator.SetBool("isActive", isActive);
+            coinReleaser.ReleaseCoin();
         }
-        else
-        {
-            Debug.LogWarning("Red Brick Block interacted with");
-        }
-        coinBlock.ReleaseCoin();
-        StartCoroutine(HoldBlockInPlaceCoroutine());
     }
 }

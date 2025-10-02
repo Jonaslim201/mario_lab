@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinPickUpSound: {fileID: 8300000, guid: d885ffc842af744d89f7d595ffcc176a, type: 3}
+  coinFlyAnimation: {fileID: 7400000, guid: 6814d298a65fc4889b0628c319fad097, type: 2}
 --- !u!1 &5798079216728720810
 GameObject:
   m_ObjectHideFlags: 0

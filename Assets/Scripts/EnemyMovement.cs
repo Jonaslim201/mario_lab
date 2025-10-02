@@ -13,6 +13,7 @@ public class EnemyMovement : MonoBehaviour {
     private Rigidbody2D enemyBody;
     public SpriteRenderer goombaSprite;
     private bool hitWall = false;
+    private JumpOverGoomba jumpOverGoomba;
 
     public Animator goombaAnimator;
 
@@ -23,6 +24,7 @@ public class EnemyMovement : MonoBehaviour {
         // get original movement params
         originalSpeed = moveSpeed;
         goombaAnimator.SetBool("onDeath", false);
+        jumpOverGoomba = Object.FindFirstObjectByType<JumpOverGoomba>();
     }
 
     public void Reset() {
@@ -70,6 +72,7 @@ public class EnemyMovement : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.CompareTag("Bullet")) {
             StartCoroutine(GoombaStomped());
+            jumpOverGoomba.addScore(1);
         }
     }
 

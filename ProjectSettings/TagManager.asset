@@ -11,6 +11,7 @@ TagManager:
   - Wall
   - InteractableBlock
   - Pipe
+  - LostCoin
   layers:
   - Default
   - TransparentFX

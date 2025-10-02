@@ -42,11 +42,16 @@ public class JumpOverGoomba : MonoBehaviour
             if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
             {
                 countScoreState = false;
-                score++;
-                scoreText.text = "Score: " + score.ToString();
+                addScore(1);
                 Debug.Log(score);
             }
         }
+    }
+
+    public void addScore(int points)
+    {
+        score += points;
+        scoreText.text = "Score: " + score.ToString();
     }
 
     void OnCollisionEnter2D(Collision2D col)

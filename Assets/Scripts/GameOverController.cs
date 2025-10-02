@@ -97,13 +97,18 @@ public class GameOverController : MonoBehaviour
         playerAudioSource.Stop();
         playerMovement.alive = true;
         // reset score
-        scoreText.text = "Score: 0";
+        jumpOverGoomba.score = 0;
+        jumpOverGoomba.scoreText.text = "Score: 0";
         // reset Goomba
         foreach (Transform eachChild in enemies.transform)
         {
-            eachChild.transform.localPosition = eachChild.GetComponent<EnemyMovement>().originalPos;
+            if (eachChild != null)
+            {
+                eachChild.gameObject.SetActive(true);
+                eachChild.GetComponent<EnemyMovement>().Reset();
+                eachChild.transform.localPosition = eachChild.GetComponent<EnemyMovement>().originalPos;
+            }
         }
-        jumpOverGoomba.score = 0;
         gameObject.SetActive(false);
         Timer.Reset();
         EnemyPool.Reset();

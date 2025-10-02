@@ -198,6 +198,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20057274}
   m_CullTransparentMesh: 1
+--- !u!1 &111187544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8247293907577183981, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+  m_PrefabInstance: {fileID: 1906139535}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &278023213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -724,7 +729,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.201716, y: 3.7356, z: -10}
+  m_LocalPosition: {x: 7.2740207, y: 3.73379, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2752,7 +2757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7f2906249df664794d97f26143608a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPool: {fileID: 0}
+  enemyPool: {fileID: 1606472135}
   spawnInterval: 5
 --- !u!4 &1175852597
 Transform:
@@ -3828,6 +3833,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1606472134}
+  - component: {fileID: 1606472135}
   m_Layer: 7
   m_Name: Enemies
   m_TagString: Untagged
@@ -3851,6 +3857,19 @@ Transform:
   - {fileID: 1906139536}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1606472135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606472133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc9c81063b16d741b7a7fb2a9f2bc13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 111187544}
 --- !u!4 &1665504442 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5144154432703744989, guid: 251fc2a0d240e4f568296d867243a3f9, type: 3}
@@ -5265,6 +5284,7 @@ SceneRoots:
   - {fileID: 618124927}
   - {fileID: 619394802}
   - {fileID: 711198051}
+  - {fileID: 1175852597}
   - {fileID: 1606472134}
   - {fileID: 1370340739}
   - {fileID: 8939012038487490726}
@@ -5278,7 +5298,6 @@ SceneRoots:
   - {fileID: 1974569008}
   - {fileID: 2021720379}
   - {fileID: 1779802419}
-  - {fileID: 1175852597}
   - {fileID: 341209136}
   - {fileID: 516980541}
   - {fileID: 1336514436}

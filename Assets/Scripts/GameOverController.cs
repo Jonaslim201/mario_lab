@@ -11,6 +11,8 @@ public class GameOverController : MonoBehaviour
     [SerializeField] private GameObject enemies;
     [SerializeField] private JumpOverGoomba jumpOverGoomba;
     [SerializeField] private GameObject gameUI;
+    [SerializeField] private Timer Timer;
+    [SerializeField] private EnemyPool EnemyPool;
 
     private PlayerMovement playerMovement;
     private Rigidbody2D playerBody;
@@ -99,9 +101,11 @@ public class GameOverController : MonoBehaviour
         // reset Goomba
         foreach (Transform eachChild in enemies.transform)
         {
-            eachChild.transform.localPosition = eachChild.GetComponent<EnemyMovement>().startPosition;
+            eachChild.transform.localPosition = eachChild.GetComponent<EnemyMovement>().originalPos;
         }
         jumpOverGoomba.score = 0;
         gameObject.SetActive(false);
+        Timer.Reset();
+        EnemyPool.Reset();
     }
 }

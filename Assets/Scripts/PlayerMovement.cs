@@ -340,11 +340,15 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") && alive)
         {
             Debug.Log("Game Over!");
-            marioAnimator.Play("mario-death");
-            marioAudio.PlayOneShot(marioDeath);
-            GetComponent<BoxCollider2D>().enabled = false; // Disable collider to fall through everything
-            alive = false;
+            onDeath();
         }
+    }
+
+    public void onDeath()
+    {
+        marioAnimator.Play("mario-death");
+        marioAudio.PlayOneShot(marioDeath);
+        alive = false;
     }
 
     public void setFaceRightState(bool state)
@@ -405,9 +409,10 @@ public class PlayerMovement : MonoBehaviour
     void PlayDeathImpulse()
     {
         marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
+        GetComponent<BoxCollider2D>().enabled = false; // Disable collider to fall through everything
     }
 
-    void GameOverScene()
+    public void GameOverScene()
     {
         gameOverController.Setup(jumpOverGoomba.score);
     }

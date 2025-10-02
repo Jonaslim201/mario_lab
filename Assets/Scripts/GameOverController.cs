@@ -96,7 +96,7 @@ public class GameOverController : MonoBehaviour
         playerMovement.marioAnimator.SetTrigger("gameRestart");
         playerAudioSource.Stop();
         playerMovement.alive = true;
-        // reset score
+        // reset score  
         jumpOverGoomba.score = 0;
         jumpOverGoomba.scoreText.text = "Score: 0";
         // reset Goomba

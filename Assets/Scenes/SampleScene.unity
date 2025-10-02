@@ -3762,6 +3762,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3412779408736033877, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4173706099290536469, guid: 58a38a1db05e00e4b8f6e206afdd2180, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
@@ -4488,7 +4492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8051594606390155912, guid: 4c8888903671b2b409e944b60625e5e2, type: 3}
       propertyPath: remainingTime
-      value: 5
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8051594606390155912, guid: 4c8888903671b2b409e944b60625e5e2, type: 3}
       propertyPath: PlayerMovement

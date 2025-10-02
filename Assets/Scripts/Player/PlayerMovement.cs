@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator marioAnimator;
     public AudioSource marioAudio;
     public AudioClip marioDeath;
-    public float deathImpulse = 35;
+    public float deathImpulse = 75;
     [System.NonSerialized]
     public bool alive = true;
     public GameOverController gameOverController;
@@ -83,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         marioBody = GetComponent<Rigidbody2D>();
+        Debug.Assert(marioBody != null, "Rigidbody2D component is missing from the player object.");
     }
     void Start()
     {
@@ -330,6 +331,14 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void onDeath()
+    {
+        marioAnimator.Play("mario-death");
+        marioAudio.PlayOneShot(marioDeath);
+        GetComponent<BoxCollider2D>().enabled = false; // Disable collider to fall through everything
+        alive = false;
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground")) onGroundState = true;
@@ -340,10 +349,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") && alive)
         {
             Debug.Log("Game Over!");
-            marioAnimator.Play("mario-death");
-            marioAudio.PlayOneShot(marioDeath);
-            GetComponent<BoxCollider2D>().enabled = false; // Disable collider to fall through everything
-            alive = false;
+            onDeath();
         }
     }
 
@@ -404,7 +410,9 @@ public class PlayerMovement : MonoBehaviour
 
     void PlayDeathImpulse()
     {
+        Debug.Log("Applying death impulse");
         marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
+        Debug.Log("Force applied: " + (Vector2.up * deathImpulse));
     }
 
     void GameOverScene()

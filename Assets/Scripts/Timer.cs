@@ -31,7 +31,7 @@ public class Timer : MonoBehaviour
                 remainingTime = 0;
                 isActive = false;
                 //Insert function when timer hits 0
-                // PlayerMovement.onDeath();
+                PlayerMovement.onDeath();
             }
             int min = Mathf.FloorToInt(remainingTime / 60);
             int sec = Mathf.FloorToInt(remainingTime % 60);

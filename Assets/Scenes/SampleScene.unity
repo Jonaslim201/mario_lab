@@ -2469,7 +2469,7 @@ MonoBehaviour:
   jumpOverGoomba: {fileID: 711198057}
   gameUI: {fileID: 1427966248}
   Timer: {fileID: 813444093}
-  EnemyPool: {fileID: 0}
+  EnemyPool: {fileID: 1606472135}
 --- !u!114 &1044879839
 MonoBehaviour:
   m_ObjectHideFlags: 0

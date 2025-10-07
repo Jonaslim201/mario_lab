@@ -2,53 +2,83 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour {
+public class EnemyMovement : MonoBehaviour
+{
+    public GameManager gameManager;
 
-    public Vector3 originalPos;
+    [Header("Positioning")]
+    private Vector3 originalPos;
+    private Vector2 velocity;
+
+    [Header("Movement Parameters")]
     public float moveSpeed = 1.5f;
     private float originalSpeed;
     public float decayTime = 1.5f;
+
+    [Header("State")]
     private bool alive = true;
-    private Vector2 velocity;
+    private bool hitWall = false;
+
+    [Header("Components")]
     private Rigidbody2D enemyBody;
     public SpriteRenderer goombaSprite;
-    private bool hitWall = false;
-    private JumpOverGoomba jumpOverGoomba;
-
     public Animator goombaAnimator;
 
-    void Awake() {
+    void Awake()
+    {
         enemyBody = GetComponent<Rigidbody2D>();
         // get starting position
         originalPos = transform.localPosition;
         // get original movement params
         originalSpeed = moveSpeed;
         goombaAnimator.SetBool("onDeath", false);
-        jumpOverGoomba = Object.FindFirstObjectByType<JumpOverGoomba>();
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
-    public void Reset() {
+    void OnEnable()
+    {
+        GameManager.OnGameRestart += HandleGameRestart;
+    }
+
+    void OnDisable()
+    {
+        GameManager.OnGameRestart -= HandleGameRestart;
+    }
+
+    private void HandleGameRestart()
+    {
+        Debug.Log($"EnemyMovement: {gameObject.name} handling restart");
+        SetRestart();
+    }
+
+    public void SetRestart()
+    {
         alive = true;
+        gameObject.SetActive(true);
         goombaSprite.enabled = true;
-        SetColliders(true); 
+        SetColliders(true);
         enemyBody.bodyType = RigidbodyType2D.Dynamic;
-        enemyBody.transform.localPosition = originalPos;
+        transform.localPosition = originalPos;
         moveSpeed = originalSpeed;
         goombaAnimator.SetBool("onDeath", false);
     }
 
-    void Movegoomba() {
+    void Movegoomba()
+    {
         enemyBody.linearVelocityX = velocity.x;
     }
 
-    void SetColliders(bool state) {
+    void SetColliders(bool state)
+    {
         Collider2D[] allCol = GetComponentsInChildren<Collider2D>();
-        foreach (Collider2D col in allCol) {
+        foreach (Collider2D col in allCol)
+        {
             col.enabled = state;
         }
     }
     //When dead
-    IEnumerator GoombaStomped() {
+    IEnumerator GoombaStomped()
+    {
         alive = false;
         goombaAnimator.SetBool("onDeath", true);
         enemyBody.bodyType = RigidbodyType2D.Static;
@@ -59,31 +89,40 @@ public class EnemyMovement : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
-    void OnCollisionEnter2D(Collision2D col) {
-        if (!col.gameObject.CompareTag("Player")) {
-            foreach (ContactPoint2D contact in col.contacts) {
-                if (contact.normal == Vector2.left || contact.normal == Vector2.right) {
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (!col.gameObject.CompareTag("Player"))
+        {
+            foreach (ContactPoint2D contact in col.contacts)
+            {
+                if (contact.normal == Vector2.left || contact.normal == Vector2.right)
+                {
                     hitWall = true;
                 }
             }
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col) {
-        if (col.gameObject.CompareTag("Bullet")) {
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Bullet"))
+        {
             StartCoroutine(GoombaStomped());
-            jumpOverGoomba.addScore(1);
+            gameManager.AddScore(1);
         }
     }
 
-    void Update() {
-        if (hitWall) {
+    void Update()
+    {
+        if (hitWall)
+        {
             // change direction
             moveSpeed *= -1;
             hitWall = false;
         }
         velocity = new Vector2(moveSpeed, 0);
-        if (alive) {
+        if (alive)
+        {
             Movegoomba();
         }
         goombaAnimator.SetFloat("xSpeed", Mathf.Abs(moveSpeed));

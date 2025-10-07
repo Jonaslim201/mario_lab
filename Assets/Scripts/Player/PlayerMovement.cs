@@ -2,30 +2,44 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Player Data")]
     public PlayerData playerData;
 
-    // private float xAxis;
-    private Rigidbody2D marioBody;
+    [Header("Input Manager")]
+    [SerializeField] public MarioInputManager marioInputManager;
 
-    private bool onGroundState = true;
-    // global variables
-    private bool faceRightState = true;
+    [Header("Components")]
     public Animator marioAnimator;
     public AudioSource marioAudio;
     public AudioClip marioDeath;
+
+    [Header("Death Settings")]
     public float deathImpulse = 75;
+
+    [Header("Game References")]
+    [SerializeField] public GameManager gameManager;
+
+    // Private components
+    private Rigidbody2D marioBody;
+
+    // Input variables (now populated by MarioInputManager)
+    private Vector2 _moveInput;
+    private Vector3 originalScale;
+    private Vector3 originalPosition;
+
+    // State variables
+    private bool onGroundState = true;
+    private bool faceRightState = true;
+
     [System.NonSerialized]
     public bool alive = true;
-    public GameOverController gameOverController;
-    public GameObject enemies;
-    // private Vector3 originalPosition;
-    public JumpOverGoomba jumpOverGoomba;
 
     #region STATE PARAMETERS
     //Variables control the various actions the player can perform at any time.
-    //These are fields which can are public allowing for other sctipts to read them
+    //These are fields which can are public allowing for other scripts to read them
     //but can only be privately written to.
     public bool IsFacingRight { get; private set; }
     public bool IsJumping { get; private set; }
@@ -52,12 +66,10 @@ public class PlayerMovement : MonoBehaviour
     private bool _dashRefilling;
     private Vector2 _lastDashDir;
     private bool _isDashAttacking;
-
     #endregion
 
     #region INPUT PARAMETERS
-    private Vector2 _moveInput;
-
+    // Input buffer timers - preserved from original system
     public float LastPressedJumpTime { get; private set; }
     public float LastPressedDashTime { get; private set; }
     #endregion
@@ -79,12 +91,45 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     #endregion
 
-    // Start is called before the first frame update
     void Awake()
     {
         marioBody = GetComponent<Rigidbody2D>();
         Debug.Assert(marioBody != null, "Rigidbody2D component is missing from the player object.");
+
+        // Find MarioInputManager if not assigned
+        if (marioInputManager == null)
+        {
+            marioInputManager = FindAnyObjectByType<MarioInputManager>();
+            if (marioInputManager == null)
+            {
+                Debug.LogError("MarioInputManager not found! Please assign it in the inspector or add MarioInputManager component to a GameObject in the scene.");
+            }
+        }
+        Debug.Log("Original position set to: " + transform.position);
     }
+
+    void OnEnable()
+    {
+        // Subscribe to MarioInputManager events
+        marioInputManager.OnMoveInput.AddListener(OnMoveInputReceived);
+        marioInputManager.OnJumpInput.AddListener(OnJumpInputReceived);
+        marioInputManager.OnJumpRelease.AddListener(OnJumpReleaseReceived);
+        marioInputManager.OnJumpHoldInput.AddListener(OnJumpHoldInputReceived);
+        marioInputManager.OnDashInput.AddListener(OnDashInputReceived);
+
+        GameManager.OnGameRestart += HandleGameRestart;
+    }
+
+    void OnDisable()
+    {
+        // Unsubscribe from MarioInputManager events
+        marioInputManager.OnMoveInput.RemoveListener(OnMoveInputReceived);
+        marioInputManager.OnJumpInput.RemoveListener(OnJumpInputReceived);
+        marioInputManager.OnJumpRelease.RemoveListener(OnJumpReleaseReceived);
+        marioInputManager.OnJumpHoldInput.RemoveListener(OnJumpHoldInputReceived);
+        marioInputManager.OnDashInput.RemoveListener(OnDashInputReceived);
+    }
+
     void Start()
     {
         // Set to be 30 FPS
@@ -92,50 +137,31 @@ public class PlayerMovement : MonoBehaviour
         setGravityScale(playerData.gravityScale);
         IsFacingRight = true;
         setGroundState(true);
+        originalPosition = transform.position;
+        originalScale = transform.localScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!alive) return;
 
+        // Update timers
         LastOnGroundTime -= Time.deltaTime;
         LastOnWallTime -= Time.deltaTime;
         LastOnWallRightTime -= Time.deltaTime;
         LastOnWallLeftTime -= Time.deltaTime;
-
         LastPressedJumpTime -= Time.deltaTime;
         LastPressedDashTime -= Time.deltaTime;
 
-        _moveInput.x = Input.GetAxisRaw("Horizontal");
-        _moveInput.y = Input.GetAxisRaw("Vertical");
-
+        // Process movement input for direction facing
         if (_moveInput.x != 0)
         {
             CheckDirectionToFace(_moveInput.x > 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Jump pressed");
-            OnJumpInput();
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            Debug.Log("Jump released");
-            OnJumpUpInput();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Debug.Log("Dash pressed");
-            onDashInput();
-        }
-
+        // Ground and wall detection (unchanged from original)
         if (!IsDashing && !IsJumping)
         {
-
             if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer))
             {
                 if (LastOnGroundTime < -0.1f)
@@ -155,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
                     || (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)) && !IsWallJumping)
                 LastOnWallRightTime = playerData.coyoteTime;
 
-            //Right Wall Check
+            //Left Wall Check
             if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)
                 || (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)) && !IsWallJumping)
                 LastOnWallLeftTime = playerData.coyoteTime;
@@ -164,10 +190,10 @@ public class PlayerMovement : MonoBehaviour
             LastOnWallTime = Mathf.Max(LastOnWallLeftTime, LastOnWallRightTime);
         }
 
+        // Jump state management (unchanged from original)
         if (IsJumping && marioBody.linearVelocityY < 0)
         {
             IsJumping = false;
-
             _isJumpFalling = true;
         }
 
@@ -180,10 +206,10 @@ public class PlayerMovement : MonoBehaviour
         if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping)
         {
             _isJumpCut = false;
-
             _isJumpFalling = false;
         }
 
+        // Jump and Wall Jump logic (unchanged from original)
         if (!IsDashing)
         {
             //Jump
@@ -194,8 +220,6 @@ public class PlayerMovement : MonoBehaviour
                 _isJumpCut = false;
                 _isJumpFalling = false;
                 Jump();
-
-                // AnimHandler.startedJumping = true;
             }
             //WALL JUMP
             else if (CanWallJump() && LastPressedJumpTime > 0)
@@ -225,8 +249,6 @@ public class PlayerMovement : MonoBehaviour
             else
                 _lastDashDir = IsFacingRight ? Vector2.right : Vector2.left;
 
-
-
             IsDashing = true;
             IsJumping = false;
             IsWallJumping = false;
@@ -253,7 +275,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (marioBody.linearVelocityY < 0 && _moveInput.y < 0)
             {
-                //Much higher gravity if holding down
+                //Much higher gravity if holding down (S key)
                 setGravityScale(playerData.gravityScale * playerData.fastFallGravityMultiplier);
                 //Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
                 marioBody.linearVelocity = new Vector2(marioBody.linearVelocityX, Mathf.Max(marioBody.linearVelocityY, -playerData.maxFastFallSpeed));
@@ -288,6 +310,7 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
     }
+
     void FixedUpdate()
     {
         if (!alive) return;
@@ -309,34 +332,96 @@ public class PlayerMovement : MonoBehaviour
             Slide();
     }
 
-    // Flip the character to face the mouse cursor (for future use with shooting)
-    private void FlipController()
+    #region INPUT EVENT HANDLERS
+
+    private void HandleGameRestart()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (mousePos.x < transform.position.x && faceRightState)
+        Debug.Log("PlayerMovement: Handling restart");
+        SetRestart();
+    }
+
+    private void OnMoveInputReceived(Vector2 horizontalInput)
+    {
+        _moveInput = horizontalInput;
+    }
+
+    private void OnJumpInputReceived()
+    {
+        OnJumpInput();
+    }
+
+    private void OnJumpReleaseReceived()
+    {
+        OnJumpUpInput();
+    }
+
+    private void OnJumpHoldInputReceived()
+    {
+        OnJumpInput();
+    }
+
+    private void OnDashInputReceived()
+    {
+        OnDashInput();
+    }
+
+    public void OnJumpInput()
+    {
+        LastPressedJumpTime = playerData.jumpInputBufferTime;
+        Debug.Log("Jump input buffered");
+    }
+
+    public void OnJumpUpInput()
+    {
+        if (CanJumpCut() || CanWallJumpCut())
         {
-            Flip();
-        }
-        else if (mousePos.x > transform.position.x && !faceRightState)
-        {
-            Flip();
+            _isJumpCut = true;
+            Debug.Log("Jump cut applied");
         }
     }
 
-    private void Flip()
+    public void OnDashInput()
     {
-
-        faceRightState = !faceRightState;
-        transform.Rotate(0, 180, 0);
-
+        LastPressedDashTime = playerData.dashInputBufferTime;
+        Debug.Log("Dash input buffered");
     }
+    #endregion
 
-    public void onDeath()
+    public void OnDeath()
     {
+        alive = false;
+        marioInputManager.DisableInput();
         marioAnimator.Play("mario-death");
         marioAudio.PlayOneShot(marioDeath);
-        GetComponent<BoxCollider2D>().enabled = false; // Disable collider to fall through everything
-        alive = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+
+        StartCoroutine(SetGameOver());
+    }
+
+    private IEnumerator SetGameOver()
+    {
+        yield return new WaitForSeconds(1f);
+        gameManager.SetGameOver();
+    }
+
+    public void SetRestart()
+    {
+        // reset position
+        marioBody.transform.position = originalPosition;
+        // reset sprite direction
+        setFaceRightState(true);
+        marioBody.transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+        marioBody.linearVelocity = Vector2.zero;
+        GetComponent<BoxCollider2D>().enabled = true;
+        marioAnimator.SetTrigger("gameRestart");
+        marioAudio.Stop();
+        alive = true;
+
+        // Re-enable input when restarting
+        if (marioInputManager != null)
+        {
+            marioInputManager.EnableInput();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -349,7 +434,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") && alive)
         {
             Debug.Log("Game Over!");
-            onDeath();
+            OnDeath();
         }
     }
 
@@ -357,28 +442,6 @@ public class PlayerMovement : MonoBehaviour
     {
         faceRightState = state;
     }
-
-    #region INPUT CALLBACKS
-
-    public void OnJumpInput()
-    {
-        LastPressedJumpTime = playerData.jumpInputBufferTime;
-    }
-
-    public void OnJumpUpInput()
-    {
-        if (CanJumpCut() || CanWallJumpCut())
-        {
-            _isJumpCut = true;
-        }
-    }
-
-    public void onDashInput()
-    {
-        LastPressedDashTime = playerData.dashInputBufferTime;
-    }
-
-    #endregion
 
     public void setGravityScale(float scale)
     {
@@ -388,7 +451,6 @@ public class PlayerMovement : MonoBehaviour
     private void setGroundState(bool state)
     {
         marioAnimator.SetBool("onGround", state);
-        // Debug.Log("Setting ground state to: " + state);
     }
 
     private void Sleep(float duration)
@@ -410,14 +472,7 @@ public class PlayerMovement : MonoBehaviour
 
     void PlayDeathImpulse()
     {
-        Debug.Log("Applying death impulse");
         marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
-        Debug.Log("Force applied: " + (Vector2.up * deathImpulse));
-    }
-
-    void GameOverScene()
-    {
-        gameOverController.Setup(jumpOverGoomba.score);
     }
 
     #region RUN METHODS
@@ -453,12 +508,10 @@ public class PlayerMovement : MonoBehaviour
 
         marioBody.AddForce(movement * Vector2.right, ForceMode2D.Force);
         marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
-        // Debug.Log("Mario animator xSpeed: " + marioAnimator.GetFloat("xSpeed"));
     }
 
     private void Turn(bool shouldSkid = false)
     {
-
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
@@ -472,7 +525,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Playing skid animation");
         }
     }
-
     #endregion
 
     #region JUMP METHODS
@@ -504,9 +556,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Turn();
         }
-
-        // Start the two-phase wall jump coroutine
-        // StartCoroutine(TwoPhaseWallJump(dir));
 
         Vector2 force = new Vector2(playerData.wallJumpForce.x, playerData.wallJumpForce.y);
         force.x *= dir;
@@ -568,7 +617,6 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region DASH METHODS
-
     private IEnumerator StartDash(Vector2 dir)
     {
         LastOnGroundTime = 0;
@@ -627,7 +675,6 @@ public class PlayerMovement : MonoBehaviour
         marioBody.AddForce(movement * Vector2.up);
         Debug.Log("Sliding down wall with added force: " + (movement * Vector2.up));
     }
-
     #endregion
 
     #region CHECK METHODS
@@ -658,7 +705,6 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-
     private bool CanJump()
     {
         return LastOnGroundTime > 0 && !IsJumping;
@@ -669,14 +715,6 @@ public class PlayerMovement : MonoBehaviour
         bool canWallJump = LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && (!IsWallJumping ||
         (LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
 
-        // Debug.Log("CanWallJump: " + canWallJump);
-
-        bool testWallJump = LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && ((LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
-
-        // Debug.Log("Test Wall Jump: " + testWallJump);
-
-        // return LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && (!IsWallJumping ||
-        // (LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
         return canWallJump;
     }
 
@@ -711,7 +749,6 @@ public class PlayerMovement : MonoBehaviour
             return false;
         }
     }
-
     #endregion
 
     private void OnDrawGizmosSelected()

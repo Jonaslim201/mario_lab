@@ -1,16 +1,11 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 
 public class JumpOverGoomba : MonoBehaviour
 {
     public Transform enemyLocation;
-    public TextMeshProUGUI scoreText;
     private bool onGroundState;
 
-    [System.NonSerialized]
-    public int score = 0;
+    [SerializeField] public GameManager gameManager;
 
     private bool countScoreState = false;
     public Vector3 boxSize;
@@ -20,13 +15,13 @@ public class JumpOverGoomba : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void FixedUpdate()
@@ -43,15 +38,13 @@ public class JumpOverGoomba : MonoBehaviour
             {
                 countScoreState = false;
                 addScore(1);
-                Debug.Log(score);
             }
         }
     }
 
     public void addScore(int points)
     {
-        score += points;
-        scoreText.text = "Score: " + score.ToString();
+        gameManager.AddScore(points);
     }
 
     void OnCollisionEnter2D(Collision2D col)

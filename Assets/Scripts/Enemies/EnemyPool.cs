@@ -22,6 +22,21 @@ public class EnemyPool : MonoBehaviour
 
     }
 
+    void OnEnable()
+    {
+        GameManager.OnGameRestart += HandleGameRestart;
+    }
+
+    void OnDisable()
+    {
+        GameManager.OnGameRestart -= HandleGameRestart;
+    }
+
+    private void HandleGameRestart()
+    {
+        SetRestart();
+    }
+
     public GameObject GetPoolObject()
     {
         Debug.Log(pool.Count);
@@ -51,7 +66,7 @@ public class EnemyPool : MonoBehaviour
         return obj;
     }
 
-    public void Reset()
+    public void SetRestart()
     {
         foreach (GameObject obj in pool)
         {

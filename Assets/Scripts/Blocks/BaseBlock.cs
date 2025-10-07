@@ -95,7 +95,6 @@ public abstract class BaseBlock : MonoBehaviour
         isBouncing = false;
     }
 
-    // Virtual methods that can be overridden
     protected virtual void ReleaseCoin()
     {
         Debug.Log("Base block: No coin release logic");

@@ -20,6 +20,7 @@ public class VideoManager : MonoBehaviour
         killImage.enabled = true;
         videoPlayer.clip = null;
         rt = videoPlayer.targetTexture;
+        killImage.enabled = false;
     }
 
     public void PlayVideo(int index)
@@ -43,6 +44,7 @@ public class VideoManager : MonoBehaviour
 
     private void PlayVideoByIndex(int index)
     {
+        killImage.enabled = true;
         Debug.Log($"Playing video at index {index}");
         StopVideo();
         if (videoPlayer != null && videoClips != null &&

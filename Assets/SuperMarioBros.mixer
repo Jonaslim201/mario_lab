@@ -52,6 +52,20 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-7024894471997471060
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 301d0b579b58c40148314353ab0069d6
+  m_EffectName: Attenuation
+  m_MixLevel: 2327d58521abc4d2b8c54121d0aaa380
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &-6761954411581689737
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -149,6 +163,7 @@ AudioMixerController:
     - 92232f8e6a1754756b73d55097264810
     - b1dc905ea8b664f679a5fd65cda23441
     - 42a8e5efc6c044a319dc49390073d84d
+    - 03479e8a2ea114be9a4d090e7ce76235
     name: View
   - guids:
     - 1db043e45fd9b4e9ba43788ce549717c
@@ -160,8 +175,9 @@ AudioMixerController:
     - e99a178e5120e48138f701b2cf864997
     - c6c4b2da62df94a0a91eb2c171a51566
     - 42a8e5efc6c044a319dc49390073d84d
+    - 03479e8a2ea114be9a4d090e7ce76235
     name: Player Only
-  m_CurrentViewIndex: 0
+  m_CurrentViewIndex: 2
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
@@ -211,6 +227,7 @@ AudioMixerSnapshotController:
   m_FloatValues:
     c3b4a212af9f444bf8d33442740d778b: 1
     85fbcad8d9c35461984cd6708d62ecbe: 1
+    e60ed53f92e9b4be5b7a37ceede646f0: 7
   m_TransitionOverrides: {}
 --- !u!243 &978429825799461505
 AudioMixerGroupController:
@@ -223,6 +240,7 @@ AudioMixerGroupController:
   m_GroupID: 92232f8e6a1754756b73d55097264810
   m_Children:
   - {fileID: -8452999090930163820}
+  - {fileID: 2216104896279218527}
   m_Volume: fa9dfd2ff5d044473ae04c9d7f07b9b0
   m_Pitch: d9e18cf88c5284015b4a5ba05c1d4a5f
   m_Send: 00000000000000000000000000000000
@@ -260,6 +278,25 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &2216104896279218527
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Kill SFX
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 03479e8a2ea114be9a4d090e7ce76235
+  m_Children: []
+  m_Volume: ea532c75211bb4eb882465275c23ce1f
+  m_Pitch: 17354bbe395974665a8a11554f99fa9f
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -7024894471997471060}
+  m_UserColorIndex: 1
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &3762799391747657928
 AudioMixerGroupController:
   m_ObjectHideFlags: 0

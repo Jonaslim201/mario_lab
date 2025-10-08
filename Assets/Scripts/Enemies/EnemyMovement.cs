@@ -5,14 +5,7 @@ using UnityEngine;
 
 public static class GoombaEvents
 {
-    public static event Action<int> OnGoombaStomped;
     public static event Action OnGoombaDeath;
-
-    public static void TriggerGoombaStomped(int scorePoints)
-    {
-        Debug.Log("Triggering OnGoombaStomped event");
-        OnGoombaStomped?.Invoke(scorePoints);
-    }
 
     public static void TriggerGoombaDeath()
     {

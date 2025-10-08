@@ -40,13 +40,11 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
-        GoombaEvents.OnGoombaStomped += HandleGoombaStomped;
         GoombaEvents.OnGoombaDeath += HandleGoombaDeath;
     }
 
     void OnDisable()
     {
-        GoombaEvents.OnGoombaStomped -= HandleGoombaStomped;
         GoombaEvents.OnGoombaDeath -= HandleGoombaDeath;
     }
 

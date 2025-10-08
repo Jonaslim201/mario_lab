@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     void OnDisable()
     {
         GoombaEvents.OnGoombaStomped -= HandleGoombaStomped;
+        GoombaEvents.OnGoombaDeath -= HandleGoombaDeath;
     }
 
     private void ValidateReferences()
@@ -110,6 +111,7 @@ public class GameManager : MonoBehaviour
 
     public void SetGameOver()
     {
+        gameUIComponent.gameObject.SetActive(true);
         Debug.Log("Game Over Triggered");
         Time.timeScale = 0.0f;
         OnGameOver?.Invoke(score);
@@ -128,7 +130,9 @@ public class GameManager : MonoBehaviour
 
         // Reset score
         score = 0;
+        killScore = 0;
 
+        gameUIComponent.gameObject.SetActive(true);
         // Reset time scale first
         Time.timeScale = 1.0f;
 

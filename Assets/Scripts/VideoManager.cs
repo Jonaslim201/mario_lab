@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.UI;
 
 public class VideoManager : MonoBehaviour
 {
@@ -9,10 +10,14 @@ public class VideoManager : MonoBehaviour
     [Header("Video Library")]
     [SerializeField] private VideoClip[] videoClips;
 
+    [Header("Raw Image Display")]
+    [SerializeField] public RawImage killImage;
+
     private RenderTexture rt;
 
     void Start()
     {
+        killImage.enabled = true;
         videoPlayer.clip = null;
         rt = videoPlayer.targetTexture;
     }
@@ -20,6 +25,20 @@ public class VideoManager : MonoBehaviour
     public void PlayVideo(int index)
     {
         PlayVideoByIndex(index);
+    }
+
+    void OnEnable()
+    {
+        GameManager.OnGameStart += HandleGameStart;
+        GameManager.OnGameOver += HandleGameOver;
+        GameManager.OnGameRestart += HandleGameRestart;
+    }
+
+    void OnDisable()
+    {
+        GameManager.OnGameStart -= HandleGameStart;
+        GameManager.OnGameOver -= HandleGameOver;
+        GameManager.OnGameRestart -= HandleGameRestart;
     }
 
     private void PlayVideoByIndex(int index)
@@ -39,6 +58,27 @@ public class VideoManager : MonoBehaviour
         {
             Debug.LogWarning($"Cannot play video at index {index}. Check VideoPlayer and clips array.");
         }
+    }
+
+    public void HandleGameStart()
+    {
+        TurnOffVideoDisplay();
+    }
+
+    public void HandleGameOver(int score)
+    {
+        TurnOffVideoDisplay();
+    }
+
+    public void HandleGameRestart()
+    {
+        TurnOffVideoDisplay();
+    }
+
+    public void TurnOffVideoDisplay()
+    {
+        ClearVideoDisplay();
+        StopVideo();
     }
 
     public void StopVideo()

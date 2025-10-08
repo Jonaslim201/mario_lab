@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -14,6 +15,7 @@ public class CoinReleaser : MonoBehaviour
     [SerializeField] public CoinReleaseSettings coinReleaseSettings;
 
     private CoinBehavior coinBehavior;
+    private GameManager gameManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,6 +28,14 @@ public class CoinReleaser : MonoBehaviour
         {
             Debug.LogError("Coin prefab not assigned in CoinReleaser on " + gameObject.name);
         }
+
+        gameManager = FindAnyObjectByType<GameManager>();
+
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager not found in scene for CoinReleaser on " + gameObject.name);
+        }
+
     }
 
     private void SetupCoin()
@@ -51,7 +61,12 @@ public class CoinReleaser : MonoBehaviour
 
     public void ReleaseCoin()
     {
-        StartCoroutine(coinBehavior.SpawnAndAnimateCoin());
+        StartCoroutine(coinBehavior.SpawnAndAnimateCoin(AddCoinToScore));
+    }
+
+    public void AddCoinToScore()
+    {
+        gameManager.AddScore(1);
     }
 
 }

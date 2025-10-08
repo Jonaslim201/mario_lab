@@ -7,9 +7,14 @@ public class GameManager : MonoBehaviour
     [Header("Game Objects")]
     [SerializeField] public PlayerMovement playerMovement;
     [SerializeField] private GameObject enemies;
-    [SerializeField] private JumpOverGoomba jumpOverGoomba;
     [SerializeField] private Timer Timer;
     [SerializeField] private EnemyPool EnemyPool;
+
+    [Header("Audio Components")]
+    [SerializeField] private AudioManager killAudioManager;
+
+    [Header("Video Components")]
+    [SerializeField] private VideoManager killVideoManager;
 
     [Header("UI Components")]
     [SerializeField] private GameUI gameUIComponent;
@@ -17,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public int score { get; private set; } = 0;
+    private int killScore = 0;
 
     #region Game Events
     public static event Action OnGameStart;
@@ -32,6 +38,17 @@ public class GameManager : MonoBehaviour
         TriggerGameStart();
     }
 
+    void OnEnable()
+    {
+        GoombaEvents.OnGoombaStomped += HandleGoombaStomped;
+        GoombaEvents.OnGoombaDeath += HandleGoombaDeath;
+    }
+
+    void OnDisable()
+    {
+        GoombaEvents.OnGoombaStomped -= HandleGoombaStomped;
+    }
+
     private void ValidateReferences()
     {
         if (playerMovement == null)
@@ -43,12 +60,6 @@ public class GameManager : MonoBehaviour
         if (enemies == null)
         {
             Debug.LogError("Enemies reference is not set in GameManager!");
-            return;
-        }
-
-        if (jumpOverGoomba == null)
-        {
-            Debug.LogError("JumpOverGoomba reference is not set in GameManager!");
             return;
         }
 
@@ -78,6 +89,23 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void HandleGoombaStomped(int points)
+    {
+        AddScore(points);
+    }
+
+    private void HandleGoombaDeath()
+    {
+        Debug.Log("Handling Goomba Death, index: " + killScore);
+        killAudioManager.PlaySound(killScore);
+        killVideoManager.PlayVideo(killScore);
+        killScore += 1;
+        if (killScore >= 5)
+        {
+            killScore = 0;
+        }
     }
 
     public void SetGameOver()

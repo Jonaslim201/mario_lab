@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -42,12 +43,7 @@ public class CoinBehavior : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void ReleaseCoin()
-    {
-        StartCoroutine(SpawnAndAnimateCoin());
-    }
-
-    public IEnumerator SpawnAndAnimateCoin()
+    public IEnumerator SpawnAndAnimateCoin(Action onAnimationComplete)
     {
         coinSpriteRenderer.enabled = true;
 
@@ -59,5 +55,6 @@ public class CoinBehavior : MonoBehaviour
         coinSpriteRenderer.enabled = false;
 
         PlayCoinSound();
+        onAnimationComplete?.Invoke();
     }
 }

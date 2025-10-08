@@ -1,13 +1,20 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
+    [SerializeField] public RawImage killImage;
+    [SerializeField] private VideoManager killVideoManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-
+        HideKillVideo();
+        Debug.Assert(scoreText != null, "Score Text reference is not set in GameUI!");
+        Debug.Assert(killImage != null, "Kill Image reference is not set in GameUI!");
+        Debug.Assert(killVideoManager != null, "Kill Video Manager reference is not set i");
     }
 
     // Update is called once per frame
@@ -24,6 +31,7 @@ public class GameUI : MonoBehaviour
         GameManager.OnGameOver += HandleGameOver;
         GameManager.OnGameRestart += HandleGameRestart;
         GameManager.OnScoreChange += HandleScoreChange;
+        GoombaEvents.OnGoombaDeath += HandleGoombaDeath;
     }
 
     private void HandleGameStart()
@@ -51,27 +59,40 @@ public class GameUI : MonoBehaviour
         UpdateScore(newScore);
     }
 
+    private void HandleGoombaDeath()
+    {
+        ShowKillVideo();
+    }
+
     public void SetGameOver()
     {
         gameObject.SetActive(false);
+        HideKillVideo();
     }
 
     public void SetRestart()
     {
         Debug.Log("GameUI: Setting restart");
         gameObject.SetActive(true);
+        killImage.enabled = false;
+        HideKillVideo();
         UpdateScore(0);
     }
 
     public void UpdateScore(int score)
     {
-        if (scoreText != null)
-        {
-            scoreText.text = "Score: " + score.ToString();
-        }
-        else
-        {
-            Debug.LogWarning("Score Text reference is not set in GameUI!");
-        }
+        scoreText.text = "Score: " + score.ToString();
+    }
+
+    private void HideKillVideo()
+    {
+        killImage.enabled = false;
+        killVideoManager.StopVideo();
+    }
+
+    private void ShowKillVideo()
+    {
+        killVideoManager.StopVideo();
+        killImage.enabled = true;
     }
 }

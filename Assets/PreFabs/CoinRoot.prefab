@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5518941028296616851}
   - component: {fileID: 2140379942654350847}
   - component: {fileID: 5369627411259153551}
+  - component: {fileID: 5745075965155497488}
   m_Layer: 11
   m_Name: Coin
   m_TagString: LostCoin
@@ -149,7 +150,7 @@ AudioSource:
   m_GameObject: {fileID: 3171590318829391144}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8452999090930163820, guid: cb5b5cebce9e54787baeb20eb6b8c2bc, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: d885ffc842af744d89f7d595ffcc176a, type: 3}
   m_PlayOnAwake: 0
@@ -251,6 +252,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinPickUpSound: {fileID: 8300000, guid: d885ffc842af744d89f7d595ffcc176a, type: 3}
   coinFlyAnimation: {fileID: 7400000, guid: 6814d298a65fc4889b0628c319fad097, type: 2}
+--- !u!114 &5745075965155497488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171590318829391144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1051e0d6158e9400085701f0960fd53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameter: 0
+  useInt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5798079216728720810
 GameObject:
   m_ObjectHideFlags: 0

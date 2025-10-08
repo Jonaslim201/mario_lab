@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Components")]
     public Animator marioAnimator;
     public AudioSource marioAudio;
-    public AudioClip marioDeath;
+    public AudioSource marioDeath;
 
     [Header("Death Settings")]
     public float deathImpulse = 75;
@@ -392,7 +392,7 @@ public class PlayerMovement : MonoBehaviour
         alive = false;
         marioInputManager.DisableInput();
         marioAnimator.Play("mario-death");
-        marioAudio.PlayOneShot(marioDeath);
+        marioDeath.PlayOneShot(marioDeath.clip);
         GetComponent<BoxCollider2D>().enabled = false;
 
         StartCoroutine(SetGameOver());
@@ -414,7 +414,7 @@ public class PlayerMovement : MonoBehaviour
         marioBody.linearVelocity = Vector2.zero;
         GetComponent<BoxCollider2D>().enabled = true;
         marioAnimator.SetTrigger("gameRestart");
-        marioAudio.Stop();
+        marioDeath.Stop();
         alive = true;
 
         // Re-enable input when restarting
@@ -427,12 +427,18 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground")) onGroundState = true;
-    }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Enemy") && alive)
+        if (col.gameObject.CompareTag("Enemy") && alive)
         {
+            Debug.Log("Collided with Enemy");
+            Vector2 relativePosition = transform.position - col.transform.position;
+            Debug.Log("Relative Position: " + relativePosition);
+            if (relativePosition.y > 1.0f)
+            {
+                Debug.Log("Potential stomp detected - letting Goomba handle it");
+                return;
+            }
+
             Debug.Log("Game Over!");
             OnDeath();
         }
@@ -573,47 +579,6 @@ public class PlayerMovement : MonoBehaviour
         marioBody.AddForce(force, ForceMode2D.Impulse);
     }
 
-    private IEnumerator TwoPhaseWallJump(int dir)
-    {
-        float halfWallJumpTime = playerData.wallJumpTime / 2f;
-
-        // Phase 1: Jump away from wall
-        Vector2 awayForce = new Vector2(playerData.wallJumpForce.x * dir, playerData.wallJumpForce.y);
-
-        // Handle existing velocity
-        if (Mathf.Sign(marioBody.linearVelocityX) != Mathf.Sign(awayForce.x))
-        {
-            awayForce.x -= marioBody.linearVelocityX;
-        }
-        if (marioBody.linearVelocityY < 0)
-        {
-            awayForce.y -= marioBody.linearVelocityY;
-        }
-
-        marioBody.AddForce(awayForce, ForceMode2D.Impulse);
-        Turn();
-        Debug.Log("Phase 1: Jumping away from wall with force: " + awayForce);
-
-        // Wait for first half of wall jump time
-        yield return new WaitForSeconds(halfWallJumpTime);
-
-        // Phase 2: Check if player wants to jump back towards wall
-        bool movingTowardsWall = (_moveInput.x > 0 && dir == -1) || (_moveInput.x < 0 && dir == 1);
-
-        if (movingTowardsWall)
-        {
-            Turn();
-            Vector2 towardsForce = new Vector2(playerData.wallJumpForce.x * -dir, playerData.wallJumpForce.y);
-            towardsForce.x -= marioBody.linearVelocityX;
-
-            marioBody.AddForce(towardsForce, ForceMode2D.Impulse);
-            Debug.Log($"Phase 2: Changed velocity to create V-shape. New velocity: {marioBody.linearVelocity}");
-        }
-        else
-        {
-            Debug.Log("Phase 2: No input towards wall, continuing normal trajectory");
-        }
-    }
     #endregion
 
     #region DASH METHODS

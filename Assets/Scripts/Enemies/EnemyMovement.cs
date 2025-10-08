@@ -1,6 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public static class GoombaEvents
+{
+    public static event Action<int> OnGoombaStomped;
+    public static event Action OnGoombaDeath;
+
+    public static void TriggerGoombaStomped(int scorePoints)
+    {
+        Debug.Log("Triggering OnGoombaStomped event");
+        OnGoombaStomped?.Invoke(scorePoints);
+    }
+
+    public static void TriggerGoombaDeath()
+    {
+        Debug.Log("Triggering GoombaDeath event");
+        OnGoombaDeath?.Invoke();
+    }
+}
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -23,6 +42,10 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody2D enemyBody;
     public SpriteRenderer goombaSprite;
     public Animator goombaAnimator;
+
+    [Header("Stomping")]
+    [SerializeField] public float stompForce = 15f;
+    [SerializeField] private int stompScorePoints = 2;
 
     void Awake()
     {
@@ -79,6 +102,7 @@ public class EnemyMovement : MonoBehaviour
     //When dead
     IEnumerator GoombaStomped()
     {
+        Debug.Log("Goomba Stomped");
         alive = false;
         goombaAnimator.SetBool("onDeath", true);
         enemyBody.bodyType = RigidbodyType2D.Static;
@@ -101,12 +125,35 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            Debug.Log("Collided with Player");
+            foreach (ContactPoint2D contact in col.contacts)
+            {
+                Debug.Log($"Contact normal: {contact.normal}");
+                Debug.Log(contact.normal == Vector2.down);
+                if (contact.normal == Vector2.down && alive)
+                {
+                    Debug.Log("Player stomped Goomba");
+                    gameManager.AddScore(stompScorePoints);
+                    GoombaEvents.TriggerGoombaDeath();
+                    StartCoroutine(GoombaStomped());
+                    Rigidbody2D playerBody = col.gameObject.GetComponent<Rigidbody2D>();
+                    if (playerBody != null)
+                    {
+                        playerBody.linearVelocity = new Vector2(playerBody.linearVelocity.x, 0); // Reset vertical velocity
+                        playerBody.AddForce(Vector2.up * stompForce, ForceMode2D.Impulse);
+                    }
+                }
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Bullet"))
         {
+            GoombaEvents.TriggerGoombaDeath();
             StartCoroutine(GoombaStomped());
             gameManager.AddScore(1);
         }

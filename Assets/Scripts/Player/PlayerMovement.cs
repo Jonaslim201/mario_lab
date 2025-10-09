@@ -118,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
         marioInputManager.OnDashInput.AddListener(OnDashInputReceived);
 
         GameManager.OnGameRestart += HandleGameRestart;
+        GoombaEvents.OnPlayerDamaged += HandleGoombaCollision;
     }
 
     void OnDisable()
@@ -128,6 +129,9 @@ public class PlayerMovement : MonoBehaviour
         marioInputManager.OnJumpRelease.RemoveListener(OnJumpReleaseReceived);
         marioInputManager.OnJumpHoldInput.RemoveListener(OnJumpHoldInputReceived);
         marioInputManager.OnDashInput.RemoveListener(OnDashInputReceived);
+
+        GameManager.OnGameRestart -= HandleGameRestart;
+        GoombaEvents.OnPlayerDamaged -= HandleGoombaCollision;
     }
 
     void Start()
@@ -333,6 +337,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region INPUT EVENT HANDLERS
+    private void HandleGoombaCollision()
+    {
+        Debug.Log("PlayerMovement: Handling Goomba collision");
+        OnDeath();
+    }
 
     private void HandleGameRestart()
     {
@@ -427,21 +436,6 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground")) onGroundState = true;
-
-        if (col.gameObject.CompareTag("Enemy") && alive)
-        {
-            Debug.Log("Collided with Enemy");
-            Vector2 relativePosition = transform.position - col.transform.position;
-            Debug.Log("Relative Position: " + relativePosition);
-            if (relativePosition.y > 1.0f)
-            {
-                Debug.Log("Potential stomp detected - letting Goomba handle it");
-                return;
-            }
-
-            Debug.Log("Game Over!");
-            OnDeath();
-        }
     }
 
     public void setFaceRightState(bool state)

@@ -90,11 +90,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void HandleGoombaStomped(int points)
-    {
-        AddScore(points);
-    }
-
     private void HandleGoombaDeath()
     {
         Debug.Log("Handling Goomba Death, index: " + killScore);

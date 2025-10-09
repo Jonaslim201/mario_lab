@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -10,35 +9,23 @@ public class MarioInputManager : MonoBehaviour, MarioActions.IGameplayActions
     private MarioActions marioActions;
 
     [Header("Unity Events")]
-    public UnityEvent<Vector2> onMoveInput;
-    public UnityEvent onJumpInput;
-    public UnityEvent onJumpRelease;
-    public UnityEvent onJumpHoldInput;
-    public UnityEvent onDashInput;
+    public UnityEvent<Vector2> OnMoveInput;
+    public UnityEvent OnJumpInput;
+    public UnityEvent OnJumpRelease;
+    public UnityEvent OnJumpHoldInput;
+    public UnityEvent OnDashInput;
 
-    // Properties for direct access (alternative to events)
+    [Header("Input State")]
     public Vector2 MoveInput { get; private set; }
     public bool IsJumpPressed { get; private set; }
     public bool IsJumpHoldPressed { get; private set; }
     public bool IsDashPressed { get; private set; }
-
-    // Expose read-only accessors if listeners will be added by code
-    public UnityEvent<Vector2> OnMoveInput => onMoveInput;
-    public UnityEvent OnJumpInput => onJumpInput;
-    public UnityEvent OnJumpRelease => onJumpRelease;
-    public UnityEvent OnJumpHoldInput => onJumpHoldInput;
-    public UnityEvent OnDashInput => onDashInput;
-
-    // State tracking
     private bool wasJumpPressed = false;
     private bool wasJumpHoldPressed = false;
 
     void Awake()
     {
-        // Initialize MarioActions
         marioActions = new MarioActions();
-
-        // Register this script as callback handler
         marioActions.gameplay.AddCallbacks(this);
     }
 
@@ -47,19 +34,17 @@ public class MarioInputManager : MonoBehaviour, MarioActions.IGameplayActions
 
     void OnDestroy()
     {
-        // Remove callbacks and dispose
         if (marioActions != null)
         {
             marioActions.gameplay.RemoveCallbacks(this);
             marioActions.Dispose();
         }
 
-        // Do not set UnityEvents to null; remove listeners instead
-        onMoveInput.RemoveAllListeners();
-        onJumpInput.RemoveAllListeners();
-        onJumpRelease.RemoveAllListeners();
-        onJumpHoldInput.RemoveAllListeners();
-        onDashInput.RemoveAllListeners();
+        OnMoveInput.RemoveAllListeners();
+        OnJumpInput.RemoveAllListeners();
+        OnJumpRelease.RemoveAllListeners();
+        OnJumpHoldInput.RemoveAllListeners();
+        OnDashInput.RemoveAllListeners();
     }
 
     #region IGameplayActions Implementation
@@ -115,8 +100,6 @@ public class MarioInputManager : MonoBehaviour, MarioActions.IGameplayActions
             IsDashPressed = true;
             OnDashInput?.Invoke();
             Debug.Log("Dash input detected");
-
-            // Reset dash state after frame (dash is one-shot)
             IsDashPressed = false;
         }
     }
@@ -144,7 +127,6 @@ public class MarioInputManager : MonoBehaviour, MarioActions.IGameplayActions
 
     #endregion
 
-    // Public methods for querying input state
     public bool GetJumpInputDown()
     {
         return marioActions.gameplay.Jump.WasPressedThisFrame();
@@ -170,13 +152,11 @@ public class MarioInputManager : MonoBehaviour, MarioActions.IGameplayActions
         return marioActions.gameplay.JumpHold.IsPressed();
     }
 
-    // Get current move input as Vector2 (for compatibility with your existing code)
     public Vector2 GetMoveInputVector2()
     {
         return MoveInput;
     }
 
-    // Enable/Disable input (useful for pausing or cutscenes)
     public void EnableInput()
     {
         marioActions.gameplay.Enable();
@@ -185,15 +165,5 @@ public class MarioInputManager : MonoBehaviour, MarioActions.IGameplayActions
     public void DisableInput()
     {
         marioActions.gameplay.Disable();
-    }
-
-    // Debug visualization
-    void Update()
-    {
-        if (Application.isEditor)
-        {
-            // Optional: Display current input state in inspector during development
-            // You could add [SerializeField] fields to show current input values
-        }
     }
 }

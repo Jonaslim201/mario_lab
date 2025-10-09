@@ -158,11 +158,8 @@ AudioMixerController:
     - 1db043e45fd9b4e9ba43788ce549717c
     - e99a178e5120e48138f701b2cf864997
     - c6c4b2da62df94a0a91eb2c171a51566
-    - 545ef785d0cb64f9ca7f30f852aaf659
-    - 622aa2f7fad2e4ae09685c44e89ce25b
-    - 92232f8e6a1754756b73d55097264810
-    - b1dc905ea8b664f679a5fd65cda23441
     - 42a8e5efc6c044a319dc49390073d84d
+    - b1dc905ea8b664f679a5fd65cda23441
     - 03479e8a2ea114be9a4d090e7ce76235
     name: View
   - guids:
@@ -177,7 +174,7 @@ AudioMixerController:
     - 42a8e5efc6c044a319dc49390073d84d
     - 03479e8a2ea114be9a4d090e7ce76235
     name: Player Only
-  m_CurrentViewIndex: 2
+  m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
@@ -226,7 +223,9 @@ AudioMixerSnapshotController:
   m_SnapshotID: b5d7c8326e9cf4ce18102bc32a82eae3
   m_FloatValues:
     c3b4a212af9f444bf8d33442740d778b: 1
+    ea532c75211bb4eb882465275c23ce1f: 5.1526976
     85fbcad8d9c35461984cd6708d62ecbe: 1
+    fbfde76ed707f4d5d8b778aa03bb19fe: -9.332112
     e60ed53f92e9b4be5b7a37ceede646f0: 7
   m_TransitionOverrides: {}
 --- !u!243 &978429825799461505

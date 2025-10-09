@@ -1,16 +1,22 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class GoombaEvents
 {
     public static event Action OnGoombaDeath;
+    public static event Action OnPlayerDamaged;
 
     public static void TriggerGoombaDeath()
     {
         Debug.Log("Triggering GoombaDeath event");
         OnGoombaDeath?.Invoke();
+    }
+
+    public static void TriggerPlayerDamaged()
+    {
+        Debug.Log("Triggering PlayerDamaged event");
+        OnPlayerDamaged?.Invoke();
     }
 }
 
@@ -92,6 +98,7 @@ public class EnemyMovement : MonoBehaviour
             col.enabled = state;
         }
     }
+
     //When dead
     IEnumerator GoombaStomped()
     {
@@ -106,8 +113,22 @@ public class EnemyMovement : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void HandleStomp(Rigidbody2D playerBody)
+    {
+        gameManager.AddScore(stompScorePoints);
+        GoombaEvents.TriggerGoombaDeath();
+        if (playerBody != null)
+        {
+            playerBody.linearVelocity = new Vector2(playerBody.linearVelocity.x, 0); // Reset vertical velocity
+            playerBody.AddForce(Vector2.up * stompForce, ForceMode2D.Impulse);
+        }
+        StartCoroutine(GoombaStomped());
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (!alive) return;
+
         if (!col.gameObject.CompareTag("Player"))
         {
             foreach (ContactPoint2D contact in col.contacts)
@@ -128,16 +149,12 @@ public class EnemyMovement : MonoBehaviour
                 if (contact.normal == Vector2.down && alive)
                 {
                     Debug.Log("Player stomped Goomba");
-                    gameManager.AddScore(stompScorePoints);
-                    GoombaEvents.TriggerGoombaDeath();
-                    StartCoroutine(GoombaStomped());
                     Rigidbody2D playerBody = col.gameObject.GetComponent<Rigidbody2D>();
-                    if (playerBody != null)
-                    {
-                        playerBody.linearVelocity = new Vector2(playerBody.linearVelocity.x, 0); // Reset vertical velocity
-                        playerBody.AddForce(Vector2.up * stompForce, ForceMode2D.Impulse);
-                    }
+                    HandleStomp(playerBody);
+                    return;
                 }
+
+                GoombaEvents.TriggerPlayerDamaged();
             }
         }
     }

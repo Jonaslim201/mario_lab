@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Singleton<PlayerMovement>
 {
     [Header("Player Data")]
     public PlayerData playerData;
@@ -139,6 +140,7 @@ public class PlayerMovement : MonoBehaviour
         setGroundState(true);
         originalPosition = transform.position;
         originalScale = transform.localScale;
+        SceneManager.activeSceneChanged += SetStartingPosition;
     }
 
     void Update()
@@ -368,7 +370,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnJumpInput()
     {
         LastPressedJumpTime = playerData.jumpInputBufferTime;
-        Debug.Log("Jump input buffered");
+        // Debug.Log("Jump input buffered");
     }
 
     public void OnJumpUpInput()
@@ -376,14 +378,14 @@ public class PlayerMovement : MonoBehaviour
         if (CanJumpCut() || CanWallJumpCut())
         {
             _isJumpCut = true;
-            Debug.Log("Jump cut applied");
+            // Debug.Log("Jump cut applied");
         }
     }
 
     public void OnDashInput()
     {
         LastPressedDashTime = playerData.dashInputBufferTime;
-        Debug.Log("Dash input buffered");
+        // Debug.Log("Dash input buffered");
     }
     #endregion
 
@@ -430,6 +432,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (col.gameObject.CompareTag("Enemy") && alive)
         {
+            // Check if player is currently invincible
+            if (playerData.isInvincible)
+            {
+                Debug.Log("Player is invincible - ignoring enemy collision.");
+                // You can add code here for stomping effect, score increment, or enemy defeat if desired
+                return; // Skip death logic
+            }
+
             Debug.Log("Collided with Enemy");
             Vector2 relativePosition = transform.position - col.transform.position;
             Debug.Log("Relative Position: " + relativePosition);
@@ -536,7 +546,7 @@ public class PlayerMovement : MonoBehaviour
     #region JUMP METHODS
     private void Jump()
     {
-        Debug.Log("Jumping");
+        // Debug.Log("Jumping");
         LastPressedJumpTime = 0;
         LastOnGroundTime = 0;
 
@@ -724,5 +734,24 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireCube(_frontWallCheckPoint.position, _wallCheckSize);
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_backWallCheckPoint.position, _wallCheckSize);
+    }
+
+    public void SetStartingPosition(Scene current, Scene next)
+    {
+        if (next.name == "World-1-2")
+        {
+            this.transform.position = new Vector3(-50.2399998f, -4.3499999f, 0.0f);
+        }
+    }
+
+    public IEnumerator InvincibilityCoroutine(float duration)
+    {
+        playerData.isInvincible = true;
+        // Optional: add visual effects here
+
+        yield return new WaitForSeconds(duration);
+
+        playerData.isInvincible = false;
+        // Remove visual effects
     }
 }

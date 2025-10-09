@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
 
     [Header("Game Objects")]

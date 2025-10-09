@@ -1,21 +1,10 @@
 using UnityEngine;
-
-public class RestartButton : MonoBehaviour
+using System.Collections;
+using System.Collections.Generic;
+public class RestartButton : MonoBehaviour, InteractiveButton
 {
     [SerializeField] private GameManager gameManager;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void OnRestartButtonClicked()
+    public void ButtonClick()
     {
         if (gameManager != null)
         {

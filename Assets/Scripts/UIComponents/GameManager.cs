@@ -19,9 +19,9 @@ public class GameManager : Singleton<GameManager>
     [Header("UI Components")]
     [SerializeField] private GameUI gameUIComponent;
     [SerializeField] private GameOverUI gameOverComponent;
+    public ScoreData scoreData;
 
     [HideInInspector]
-    public int score { get; private set; } = 0;
     private int killScore = 0;
 
     #region Game Events
@@ -34,7 +34,7 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         ValidateReferences();
-
+        LoadHighScore();
         TriggerGameStart();
     }
 
@@ -82,7 +82,7 @@ public class GameManager : Singleton<GameManager>
         OnGameStart?.Invoke();
 
         // Initialize score
-        OnScoreChange?.Invoke(score);
+        OnScoreChange?.Invoke(scoreData.currentScore);
     }
 
     // Update is called once per frame
@@ -112,30 +112,39 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("Game Over Triggered");
         Time.timeScale = 0.0f;
-        OnGameOver?.Invoke(score);
+        SaveHighScore();   // <-- Save highscore when game ends
+        OnGameOver?.Invoke(scoreData.currentScore);
     }
 
     public void AddScore(int points)
     {
-        score += points;
-        Debug.Log($"Score updated: {score}");
-        OnScoreChange?.Invoke(score);
+        scoreData.AddPoints(points);
+        Debug.Log($"Score updated: {scoreData.currentScore}");
+        OnScoreChange?.Invoke(scoreData.currentScore);
     }
 
     public void RestartGame()
     {
         Debug.Log("Game Restart Triggered");
-
-        // Reset score
-        score = 0;
-
-        // Reset time scale first
+        scoreData.ResetCurrentScore();
         Time.timeScale = 1.0f;
-
-        // Trigger restart event for all listeners
         OnGameRestart?.Invoke();
+        OnScoreChange?.Invoke(scoreData.currentScore);
+    }
 
-        // Trigger score change to reset score display
-        OnScoreChange?.Invoke(score);
+    private void SaveHighScore()
+    {
+        PlayerPrefs.SetInt("HighScore", scoreData.highScore);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadHighScore()
+    {
+        scoreData.highScore = PlayerPrefs.GetInt("HighScore", 0);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveHighScore();
     }
 }

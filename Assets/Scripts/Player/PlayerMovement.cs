@@ -748,7 +748,6 @@ public class PlayerMovement : Singleton<PlayerMovement>
     {
         playerData.isInvincible = true;
         // Optional: add visual effects here
-
         yield return new WaitForSeconds(duration);
 
         playerData.isInvincible = false;

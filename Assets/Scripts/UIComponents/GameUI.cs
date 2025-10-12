@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameUI : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
+    [SerializeField] private ScoreData scoreData;
     [SerializeField] public RawImage killImage;
     [SerializeField] private VideoManager killVideoManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -81,7 +82,8 @@ public class GameUI : MonoBehaviour
 
     public void UpdateScore(int score)
     {
-        scoreText.text = "Score: " + score.ToString();
+
+        scoreText.text = "Score: " + scoreData.currentScore.ToString() + "\nHighscore: " + scoreData.highScore.ToString();
     }
 
     private void HideKillVideo()

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Video;
 
-public class VideoManager : MonoBehaviour
+public class VideoManager : Singleton<VideoManager>
 {
     [Header("Video Player")]
     [SerializeField] private VideoPlayer videoPlayer;

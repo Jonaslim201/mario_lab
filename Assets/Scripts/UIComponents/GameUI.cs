@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour
+public class GameUI : Singleton<GameUI>
 {
     public TextMeshProUGUI scoreText;
     [SerializeField] private ScoreData scoreData;

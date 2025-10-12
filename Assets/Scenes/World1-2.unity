@@ -4470,6 +4470,7 @@ MonoBehaviour:
   killVideoManager: {fileID: 899718923}
   gameUIComponent: {fileID: 1989866121}
   gameOverComponent: {fileID: 1982297421}
+  scoreData: {fileID: 11400000, guid: ac1578417e35f24488b9b9cb1c74652f, type: 2}
 --- !u!4 &1922073408
 Transform:
   m_ObjectHideFlags: 0
@@ -4613,8 +4614,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 580230890}
+  scoreData: {fileID: 11400000, guid: ac1578417e35f24488b9b9cb1c74652f, type: 2}
   killImage: {fileID: 2091812516}
-  killVideoManager: {fileID: 0}
+  killVideoManager: {fileID: 899718923}
 --- !u!114 &1989866122
 MonoBehaviour:
   m_ObjectHideFlags: 0

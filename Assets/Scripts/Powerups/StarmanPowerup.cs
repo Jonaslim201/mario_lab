@@ -6,6 +6,8 @@ public class StarmanPowerup : BasePowerup
 {
     [SerializeField] private float invincibilityDuration = 10f; // Duration of invincibility in seconds
     [SerializeField] private float flashInterval = 0.1f; // Flash speed during invincibility
+    private Coroutine invincibilityCoroutine;
+
 
     protected override void Start()
     {
@@ -15,7 +17,7 @@ public class StarmanPowerup : BasePowerup
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Player") && spawned)
+        if (col.gameObject.CompareTag("Player") && powerupData.isSpawned)
         {
             // Apply invincibility effect to player
             MonoBehaviour player = col.gameObject.GetComponent<MonoBehaviour>();
@@ -23,13 +25,13 @@ public class StarmanPowerup : BasePowerup
             {
                 ApplyPowerup(player);
             }
-
+            powerupData.isConsumed = true;
             // Destroy the star powerup object
-            DestroyPowerup();
+            gameObject.SetActive(false);
         }
         else if (col.gameObject.layer == 10) // Hitting a pipe
         {
-            if (spawned)
+            if (powerupData.isSpawned)
             {
                 goRight = !goRight;
                 rigidBody.AddForce(Vector2.right * 3 * (goRight ? 1 : -1), ForceMode2D.Impulse);
@@ -39,7 +41,7 @@ public class StarmanPowerup : BasePowerup
 
     public override void SpawnPowerup()
     {
-        spawned = true;
+        powerupData.isSpawned = true;
         rigidBody.AddForce(Vector2.right * 3, ForceMode2D.Impulse); // Move to the right
     }
 
@@ -48,7 +50,16 @@ public class StarmanPowerup : BasePowerup
         PlayerMovement pm = i.GetComponent<PlayerMovement>();
         if (pm != null)
         {
-            pm.StartCoroutine(pm.InvincibilityCoroutine(invincibilityDuration));
+            pm.StartInvincibility(invincibilityDuration);
+        }
+    }
+
+    public void StopInvincibility(PlayerMovement pm)
+    {
+        if (invincibilityCoroutine != null)
+        {
+            pm.StopCoroutine(invincibilityCoroutine);
+            invincibilityCoroutine = null;
         }
     }
 }

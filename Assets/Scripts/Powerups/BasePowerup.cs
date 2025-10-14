@@ -4,15 +4,34 @@ using UnityEngine;
 public abstract class BasePowerup : MonoBehaviour, IPowerup
 {
     public PowerupType type;
-    public bool spawned = false;
-    protected bool consumed = false;
     protected bool goRight = true;
+    public PowerupData powerupData; // Reference to SO
+
     protected Rigidbody2D rigidBody;
 
     // base methods
     protected virtual void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        if (powerupData != null)
+        {
+            powerupData.initialPosition = transform.position;
+        }
+    }
+
+    public virtual void ResetPowerup()
+    {
+        if (powerupData != null)
+        {
+            powerupData.ResetState();
+            transform.position = powerupData.initialPosition;
+        }
+        // Reset local states as well, if any
+        Debug.Log("Setting this to trueeeee");
+        gameObject.SetActive(true);
+        rigidBody.linearVelocity = Vector2.zero;
+        rigidBody.angularVelocity = 0;
+        // Other resets
     }
 
     // interface methods
@@ -29,7 +48,7 @@ public abstract class BasePowerup : MonoBehaviour, IPowerup
     {
         get // getter
         {
-            return spawned;
+            return powerupData.isSpawned;
         }
     }
 

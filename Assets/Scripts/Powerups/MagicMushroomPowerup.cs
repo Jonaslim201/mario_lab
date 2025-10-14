@@ -14,28 +14,28 @@ public class MagicMushroomPowerup : BasePowerup
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Player") && spawned)
+        if (col.gameObject.CompareTag("Player") && powerupData.isSpawned)
         {
             // Apply powerup to the player when colliding
             ApplyPowerup(col.gameObject.GetComponent<MonoBehaviour>());
 
             // then destroy powerup (optional)
-            DestroyPowerup();
+            powerupData.isConsumed = true;
+            gameObject.SetActive(false);
         }
         else if (col.gameObject.layer == 10) // else if hitting Pipe, flip travel direction
         {
-            if (spawned)
+            if (powerupData.isSpawned)
             {
                 goRight = !goRight;
                 rigidBody.AddForce(Vector2.right * 3 * (goRight ? 1 : -1), ForceMode2D.Impulse);
             }
         }
     }
-
     // interface implementation
     public override void SpawnPowerup()
     {
-        spawned = true;
+        powerupData.isSpawned = true;
         rigidBody.AddForce(Vector2.right * 3, ForceMode2D.Impulse); // move to the right
     }
 

@@ -13,7 +13,7 @@ public class LoadingScreenUI : MonoBehaviour
     void Start()
     {
         loadCoroutine = StartCoroutine(LoadNextSceneAfterDelay());
-        scoreText.text = "Highscore " + scoreData.highScore.ToString();
+        scoreText.text = "Highscore: " + scoreData.highScore.ToString();
     }
 
     IEnumerator LoadNextSceneAfterDelay()
@@ -22,7 +22,7 @@ public class LoadingScreenUI : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
-
+        
     public void BackToMainMenu()
     {
         if (loadCoroutine != null)

@@ -35,6 +35,9 @@ public class PlayerMovement : Singleton<PlayerMovement>
     private bool onGroundState = true;
     private bool faceRightState = true;
 
+    private Coroutine invincibilityCoroutine;
+
+
     [System.NonSerialized]
     public bool alive = true;
 
@@ -752,5 +755,25 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
         playerData.isInvincible = false;
         // Remove visual effects
+    }
+
+    public void StartInvincibility(float duration)
+    {
+        if (invincibilityCoroutine != null)
+        {
+            StopCoroutine(invincibilityCoroutine);
+        }
+        invincibilityCoroutine = StartCoroutine(InvincibilityCoroutine(duration));
+    }
+
+    public void StopInvincibility()
+    {
+        if (invincibilityCoroutine != null)
+        {
+            StopCoroutine(invincibilityCoroutine);
+            invincibilityCoroutine = null;
+            playerData.isInvincible = false;
+            // Remove visual effects immediately if any
+        }
     }
 }

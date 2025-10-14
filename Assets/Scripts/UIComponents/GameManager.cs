@@ -1,5 +1,6 @@
-using UnityEngine;
 using System;
+using System.Linq;
+using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -128,9 +129,22 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("Game Restart Triggered");
         scoreData.ResetCurrentScore();
         Time.timeScale = 1.0f;
+
+        Debug.Log(Resources.FindObjectsOfTypeAll<BasePowerup>());
+        var allPowerups = Resources.FindObjectsOfTypeAll<BasePowerup>();
+        var scenePowerups = allPowerups.Where(p => p.gameObject.scene.isLoaded).ToArray();
+
+        foreach (var p in scenePowerups)
+        {
+            p.gameObject.SetActive(true);  // reactivate powerup
+            p.ResetPowerup();              // reset state
+        }
+        playerMovement.StopInvincibility();
+
         OnGameRestart?.Invoke();
         OnScoreChange?.Invoke(scoreData.currentScore);
     }
+
 
     private void SaveHighScore()
     {
@@ -147,4 +161,6 @@ public class GameManager : Singleton<GameManager>
     {
         SaveHighScore();
     }
+
+
 }

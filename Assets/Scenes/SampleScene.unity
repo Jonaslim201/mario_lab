@@ -2458,7 +2458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  spawned: 0
+  powerupData: {fileID: 11400000, guid: 1c377ccc96e29004bb27515393e08292, type: 2}
 --- !u!212 &739326899
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3871,7 +3871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
-  spawned: 0
+  powerupData: {fileID: 11400000, guid: 817dc05046c34b54f96d6200d33ca8ab, type: 2}
   invincibilityDuration: 10
   flashInterval: 0.1
 --- !u!1 &977529405

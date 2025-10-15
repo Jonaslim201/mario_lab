@@ -22,4 +22,14 @@ public class RedBrickCoin : BaseBlock
             canReleaseCoins = false;
         }
     }
+
+    public override void ResetBlock()
+    {
+        base.ResetBlock();
+        if (coinReleaser != null)
+        {
+            coinReleaser.ResetCoin();
+        }
+    }
+
 }

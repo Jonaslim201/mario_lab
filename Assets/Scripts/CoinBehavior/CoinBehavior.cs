@@ -57,4 +57,11 @@ public class CoinBehavior : MonoBehaviour
         PlayCoinSound();
         onAnimationComplete?.Invoke();
     }
+
+    public void ResetCoinVisual()
+    {
+        coinSpriteRenderer.enabled = true;
+        coinAnimator.ResetTrigger("PlayerHit");
+        coinAnimator.Play("Idle", 0);
+    }
 }

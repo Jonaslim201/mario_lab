@@ -18,6 +18,8 @@ public abstract class BaseBlock : MonoBehaviour
     protected Collider2D blockCollider;
     protected bool isActive = true;
     protected bool isBouncing = false;
+    public Animator animator; // Reference to block's animator
+
 
     protected virtual void Awake()
     {
@@ -115,5 +117,21 @@ public abstract class BaseBlock : MonoBehaviour
                 OnHitFromBelow();
             }
         }
+    }
+
+    public virtual void ResetBlock()
+    {
+        // Reset the active state
+        isActive = true;
+        canReleaseCoins = true;
+
+        // Reset visuals, e.g., sprite, animation
+        if (animator != null)
+        {
+            animator.SetBool("isActive", true);
+        }
+
+        // Reactivate the block GameObject or its visual components
+        gameObject.SetActive(true);
     }
 }

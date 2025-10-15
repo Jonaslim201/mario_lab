@@ -16,6 +16,8 @@ public class CoinReleaser : MonoBehaviour
 
     private CoinBehavior coinBehavior;
     private GameManager gameManager;
+    private GameObject spawnedCoin;  // <-- Add this here as a field
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,7 +42,7 @@ public class CoinReleaser : MonoBehaviour
 
     private void SetupCoin()
     {
-        GameObject spawnedCoin = Instantiate(coinReleaseSettings.coinPrefab, transform.position, Quaternion.identity);
+        spawnedCoin = Instantiate(coinReleaseSettings.coinPrefab, transform.position, Quaternion.identity);
         GameObject childCoin = spawnedCoin.transform.GetChild(0).gameObject;
 
         coinBehavior = childCoin.GetComponent<CoinBehavior>();
@@ -67,6 +69,26 @@ public class CoinReleaser : MonoBehaviour
     public void AddCoinToScore()
     {
         gameManager.AddScore(1);
+    }
+
+    public void ResetCoin()
+    {
+        if (spawnedCoin == null)
+        {
+            SetupCoin();
+        }
+        else
+        {
+            if (coinBehavior != null)
+            {
+                coinBehavior.ResetCoinVisual();
+            }
+            else
+            {
+                // fallback
+                SetupCoin();
+            }
+        }
     }
 
 }

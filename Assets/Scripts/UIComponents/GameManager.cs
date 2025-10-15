@@ -130,6 +130,12 @@ public class GameManager : Singleton<GameManager>
         scoreData.ResetCurrentScore();
         Time.timeScale = 1.0f;
 
+        BaseBlock[] allBlocks = FindObjectsOfType<BaseBlock>();
+        foreach (var block in allBlocks)
+        {
+            block.ResetBlock();
+        }
+
         Debug.Log(Resources.FindObjectsOfTypeAll<BasePowerup>());
         var allPowerups = Resources.FindObjectsOfTypeAll<BasePowerup>();
         var scenePowerups = allPowerups.Where(p => p.gameObject.scene.isLoaded).ToArray();

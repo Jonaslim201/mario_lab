@@ -44,4 +44,17 @@ public class QuestionMarkBlock : BaseBlock
             coinReleaser.ReleaseCoin();
         }
     }
+
+    public override void ResetBlock()
+    {
+        base.ResetBlock();
+        if (animator != null)
+        {
+            animator.SetBool("isActive", true);
+        }
+        if (coinReleaser != null)
+        {
+            coinReleaser.ResetCoin();
+        }
+    }
 }

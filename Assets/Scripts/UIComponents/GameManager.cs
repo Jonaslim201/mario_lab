@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -13,6 +15,8 @@ public class GameManager : Singleton<GameManager>
 
     [Header("Audio Components")]
     [SerializeField] private AudioManager killAudioManager;
+    [SerializeField] private AudioManager bgmAudioManager;
+    [SerializeField] private AudioClip bgmClip;
 
     [Header("Video Components")]
     [SerializeField] private VideoManager killVideoManager;
@@ -81,9 +85,11 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("Game Started");
         OnGameStart?.Invoke();
+        scoreData.ResetCurrentScore();
 
         // Initialize score
         OnScoreChange?.Invoke(scoreData.currentScore);
+        bgmAudioManager.PlayOnLoop(bgmClip); // Play background music
     }
 
     // Update is called once per frame
@@ -112,6 +118,13 @@ public class GameManager : Singleton<GameManager>
     public void SetGameOver()
     {
         Debug.Log("Game Over Triggered");
+        bgmAudioManager.StopSound();
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    public IEnumerator GameOverCoroutine()
+    {
+        yield return new WaitForSeconds(1.0f);
         Time.timeScale = 0.0f;
         SaveHighScore();   // <-- Save highscore when game ends
         OnGameOver?.Invoke(scoreData.currentScore);
@@ -126,25 +139,11 @@ public class GameManager : Singleton<GameManager>
 
     public void RestartGame()
     {
+        bgmAudioManager.PlayOnLoop(bgmClip);
         Debug.Log("Game Restart Triggered");
         scoreData.ResetCurrentScore();
         Time.timeScale = 1.0f;
 
-        BaseBlock[] allBlocks = FindObjectsOfType<BaseBlock>();
-        foreach (var block in allBlocks)
-        {
-            block.ResetBlock();
-        }
-
-        Debug.Log(Resources.FindObjectsOfTypeAll<BasePowerup>());
-        var allPowerups = Resources.FindObjectsOfTypeAll<BasePowerup>();
-        var scenePowerups = allPowerups.Where(p => p.gameObject.scene.isLoaded).ToArray();
-
-        foreach (var p in scenePowerups)
-        {
-            p.gameObject.SetActive(true);  // reactivate powerup
-            p.ResetPowerup();              // reset state
-        }
         playerMovement.StopInvincibility();
 
         OnGameRestart?.Invoke();

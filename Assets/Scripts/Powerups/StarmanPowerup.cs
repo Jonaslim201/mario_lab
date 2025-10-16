@@ -27,7 +27,7 @@ public class StarmanPowerup : BasePowerup
             }
             powerupData.isConsumed = true;
             // Destroy the star powerup object
-            gameObject.SetActive(false);
+            DestroyPowerup();
         }
         else if (col.gameObject.layer == 10) // Hitting a pipe
         {

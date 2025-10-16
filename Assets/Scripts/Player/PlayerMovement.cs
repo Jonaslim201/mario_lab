@@ -396,11 +396,12 @@ public class PlayerMovement : Singleton<PlayerMovement>
     {
         alive = false;
         marioInputManager.DisableInput();
+        gameManager.SetGameOver();
         marioAnimator.Play("mario-death");
         marioDeath.PlayOneShot(marioDeath.clip);
         GetComponent<BoxCollider2D>().enabled = false;
 
-        StartCoroutine(SetGameOver());
+        // StartCoroutine(SetGameOver());
     }
 
     private IEnumerator SetGameOver()
@@ -421,6 +422,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
         marioAnimator.SetTrigger("gameRestart");
         marioDeath.Stop();
         alive = true;
+        playerData.isInvincible = false;
 
         // Re-enable input when restarting
         if (marioInputManager != null)

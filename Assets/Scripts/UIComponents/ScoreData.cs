@@ -9,6 +9,14 @@ public class ScoreData : ScriptableObject
     public void ResetCurrentScore()
     {
         currentScore = 0;
+        PlayerPrefs.SetInt("CurrentScore", currentScore);
+    }
+
+    public void ResetHighScore()
+    {
+        Debug.Log("High score reset to 0");
+        highScore = 0;
+        PlayerPrefs.SetInt("HighScore", highScore);
     }
 
     public void AddPoints(int points)

@@ -16,6 +16,7 @@ public class GameUI : Singleton<GameUI>
         Debug.Assert(scoreText != null, "Score Text reference is not set in GameUI!");
         Debug.Assert(killImage != null, "Kill Image reference is not set in GameUI!");
         Debug.Assert(killVideoManager != null, "Kill Video Manager reference is not set i");
+        UpdateScore();
     }
 
     // Update is called once per frame
@@ -57,7 +58,7 @@ public class GameUI : Singleton<GameUI>
     private void HandleScoreChange(int newScore)
     {
         Debug.Log($"GameUI: Score changed to {newScore}");
-        UpdateScore(newScore);
+        UpdateScore();
     }
 
     private void HandleGoombaDeath()
@@ -77,12 +78,11 @@ public class GameUI : Singleton<GameUI>
         gameObject.SetActive(true);
         killImage.enabled = false;
         HideKillVideo();
-        UpdateScore(0);
+        UpdateScore();
     }
 
-    public void UpdateScore(int score)
+    public void UpdateScore()
     {
-
         scoreText.text = "Score: " + scoreData.currentScore.ToString() + "\nHighscore: " + scoreData.highScore.ToString();
     }
 

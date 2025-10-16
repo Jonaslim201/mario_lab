@@ -37,6 +37,15 @@ public class QuestionMarkBlock : BaseBlock
         }
     }
 
+    protected override void ResetAnimation()
+    {
+        if (animator)
+        {
+            Debug.Log("QuestionMarkBlock: Stopping animation");
+            animator.SetBool("isActive", true);
+        }
+    }
+
     protected override void ReleaseCoin()
     {
         if (coinReleaser != null)
@@ -45,13 +54,10 @@ public class QuestionMarkBlock : BaseBlock
         }
     }
 
-    public override void ResetBlock()
+    protected override void ResetBlock()
     {
         base.ResetBlock();
-        if (animator != null)
-        {
-            animator.SetBool("isActive", true);
-        }
+
         if (coinReleaser != null)
         {
             coinReleaser.ResetCoin();

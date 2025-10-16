@@ -162,7 +162,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: d7c317776eceb443fae417718ea7b16d, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canReleaseCoins: 0
+  canReleasePowerUp: 0
   staysBouncy: 1
   hasAnimation: 0
   bounceDuration: 0.7

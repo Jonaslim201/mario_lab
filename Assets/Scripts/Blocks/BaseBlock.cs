@@ -3,8 +3,11 @@ using UnityEngine;
 
 public abstract class BaseBlock : MonoBehaviour
 {
+    [SerializeField] GameManager gameManager;
+
     [Header("Block Behavior Settings")]
     [SerializeField] protected bool canReleaseCoins = false;
+    [SerializeField] protected bool canReleasePowerUp = false;
     [SerializeField] protected bool staysBouncy = true;
     [SerializeField] protected bool hasAnimation = false;
 
@@ -18,7 +21,6 @@ public abstract class BaseBlock : MonoBehaviour
     protected Collider2D blockCollider;
     protected bool isActive = true;
     protected bool isBouncing = false;
-    public Animator animator; // Reference to block's animator
 
 
     protected virtual void Awake()
@@ -29,6 +31,9 @@ public abstract class BaseBlock : MonoBehaviour
 
         Debug.Assert(springJoint != null, "SpringJoint2D missing from " + gameObject.name);
         Debug.Assert(rb != null, "Rigidbody2D missing from " + gameObject.name);
+
+        gameManager = FindAnyObjectByType<GameManager>();
+        GameManager.OnGameRestart += ResetBlock;
     }
 
     protected virtual void Start()
@@ -75,6 +80,12 @@ public abstract class BaseBlock : MonoBehaviour
             ReleaseCoin();
         }
 
+        if (canReleasePowerUp)
+        {
+            ReleasePowerUp();
+            Debug.Log("Base block: Power-up release logic not implemented");
+        }
+
         // Handle animation
         if (hasAnimation)
         {
@@ -102,6 +113,11 @@ public abstract class BaseBlock : MonoBehaviour
         Debug.Log("Base block: No coin release logic");
     }
 
+    protected virtual void ReleasePowerUp()
+    {
+        Debug.Log("Base block: No power-up release logic");
+    }
+
     protected virtual void PlayAnimation()
     {
         Debug.Log("Base block: No animation logic");
@@ -119,19 +135,21 @@ public abstract class BaseBlock : MonoBehaviour
         }
     }
 
-    public virtual void ResetBlock()
+    protected virtual void ResetAnimation()
     {
+        Debug.Log("Base block: No reset animation logic");
+    }
+
+    protected virtual void ResetBlock()
+    {
+        MakeKinematic();
         // Reset the active state
         isActive = true;
-        canReleaseCoins = true;
 
-        // Reset visuals, e.g., sprite, animation
-        if (animator != null)
+        if (hasAnimation)
         {
-            animator.SetBool("isActive", true);
+            Debug.Log("BaseBlock: Resetting animation");
+            ResetAnimation();
         }
-
-        // Reactivate the block GameObject or its visual components
-        gameObject.SetActive(true);
     }
 }

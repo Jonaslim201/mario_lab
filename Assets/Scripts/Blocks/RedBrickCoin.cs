@@ -23,7 +23,7 @@ public class RedBrickCoin : BaseBlock
         }
     }
 
-    public override void ResetBlock()
+    protected override void ResetBlock()
     {
         base.ResetBlock();
         if (coinReleaser != null)

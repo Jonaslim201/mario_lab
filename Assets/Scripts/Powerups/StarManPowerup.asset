@@ -15,4 +15,5 @@ MonoBehaviour:
   powerupType: 3
   isSpawned: 1
   isConsumed: 1
-  initialPosition: {x: -9.01, y: -1.18, z: 0}
+  initialPosition: {x: 9.553, y: 0.461, z: 0.15110953}
+  spawnSound: {fileID: 8300000, guid: 97a450c65284a4a3094ba5c2221a492b, type: 3}

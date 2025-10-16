@@ -6,6 +6,7 @@ public abstract class BasePowerup : MonoBehaviour, IPowerup
     public PowerupType type;
     protected bool goRight = true;
     public PowerupData powerupData; // Reference to SO
+    [SerializeField] public AudioSource powerupSource;
 
     protected Rigidbody2D rigidBody;
 

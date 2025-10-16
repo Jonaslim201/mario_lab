@@ -19,6 +19,32 @@ public class AudioManager : MonoBehaviour
         PlaySoundByIndex(index);
     }
 
+    public void PlayOnLoop(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play sound on loop. Check AudioSource and clip.");
+        }
+    }
+
+    public void PlayAudioClip(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play sound. Check AudioSource and clip.");
+        }
+    }
+
     private void PlaySoundByIndex(int index)
     {
         Debug.Log($"Playing sound at index {index}");
